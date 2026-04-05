@@ -14,3 +14,14 @@ def get_token():
             return user
     return None
         
+# def token_current():
+    
+    
+
+# def get_token():
+#     data = request.headers.get("Auth")
+#     user = User.query.filter(User.token == data).first()
+#     if user:
+#         return user
+#     return None
+        
