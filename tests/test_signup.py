@@ -63,3 +63,11 @@ def test_sign_up_with_length_password_shorter_than_8_character(client):
 
     assert response.status_code == 400
     assert response.json == {"error" : "password must longer than 8 character"}
+
+# ddddd
+def test_sign_up_with_length_password_is_8_character(client):
+    payload = signup_with_password_is_8_character()
+
+    response = client.post("/signup", json=payload)
+
+    assert response.status_code == 201

@@ -34,7 +34,7 @@ def test_login_wrong_password(client):
 
 # dddddddd
 
-def test_login_with_not_token_but_email_or_phoneNumber_and_password_true(client):
+def test_login_with_not_token(client):
     payload_signup = signup_valid()
 
     response_signup = client.post("/signup", json=payload_signup)

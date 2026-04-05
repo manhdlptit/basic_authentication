@@ -69,3 +69,15 @@ def signup_password_short():
         "country" : "VN",
         "city" : "VT"
     })
+
+def signup_with_password_is_8_character():
+    return ({
+        "full_name" : "Le Duc Manh",
+        "phone_number" : "0397618712",
+        "email" : "manhdl.ptit@gmail.com",
+        "input_password" : "12345678",
+        "check_password": "12345678",
+        "address" : "19,MP,VT,PT",
+        "country" : "VN",
+        "city" : "VT"
+    })
