@@ -13,6 +13,7 @@ class User(db.Model):
     city = db.Column(db.String(100))
     password = db.Column(db.String(20))
     token = db.Column(db.String(100))
+    change_password = db.Column(db.String(10))
 
     def __init__(self, full_name, phone_number, email, address, country, city, password, token):
         self.full_name = full_name
