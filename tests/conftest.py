@@ -1,7 +1,7 @@
 import pytest
 
 from main import app
-from model.model import db
+from app.model.model import db
 
 @pytest.fixture
 def cr_app():
