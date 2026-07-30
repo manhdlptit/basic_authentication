@@ -1,9 +1,49 @@
-def change_password_valid():
+def password_change_first_time():
     return {
         "current_password" : "Lwman8_1812",
         "new_password" : "Manhdl.ptit@2026"
         }
 
+
+def change_password_first_time_but_current_password_wrong():
+    return {
+        "current_password" : "Lwman8_181",
+        "new_password" : "Manhdl.ptit@2026"
+        }
+
+
+def password_change_second_time():
+    return {
+        "current_password" : "Manhdl.ptit@2026",
+        "new_password" : "leducmanh1812"
+        }
+
+
+def password_change_third_time():
+    return {
+        "current_password" : "leducmanh1812",
+        "new_password" : "kichu18122007"
+        }
+
+
+def password_change_third_time_same_like_first_time():
+    return {
+    "current_password" : "leducmanh1812",
+    "new_password" : "Manhdl.ptit@2026"
+        }
+
+
+def password_change_fourth_time():
+    return {
+        "current_password" : "kichu18122007",
+        "new_password" : "Lwman8_1812"
+    }
+
+def password_same_like_full_name():
+    return {
+        "current_password" : "Lwman8_1812",
+        "new_password" : "lEdUcMaNh"
+        }
 
 def inf_user_valid():
     return {

@@ -12,7 +12,7 @@ def test_change_password_not_with_access_token_and_valid_data_and_successfully(c
 
     access_token = response_inf_user.json["your_access_token"]
 
-    payload_change_password = change_password_valid()
+    payload_change_password = password_change_first_time()
     response_change_password = client.post("/change-password", json = payload_change_password, headers = {"Authorization" : f"Bearer {access_token}"})
 
     assert response_change_password.status_code == 200
@@ -41,16 +41,3 @@ def test_change_password_not_with_access_token_and_invalid_data_and_inf_having_n
 
     assert response_inf_user.status_code == 400
     assert response_inf_user.json == {"Error" : "Not null any value"}
-
-
-def test_change_password_with_access_token_and_successfully(client):
-    payload_signup = signup_valid()
-    response_signup = client.post("/signup", json = payload_signup)
-
-    access_token = response_signup.json["access_token"]
-
-    payload_change_password = change_password_valid()
-    response_change_password = client.post("/change-password", json = payload_change_password, headers = {"Authorization" : f"Bearer {access_token}"})
-
-    assert response_change_password.status_code == 200
-    assert response_change_password.json == {"successfully" : "change password successfully"}

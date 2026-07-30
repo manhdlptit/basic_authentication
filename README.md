@@ -83,11 +83,22 @@ Write new testcase forgot-password, login, signup because completely eliminate t
 - ❌ **Signup valid, null value**:400
 - ✅ **Signup valid, current password correct, change password successful**:200
 
-### 4. Logout
+### 4. Change password
+
+- ✅ **Change password first_time successful with access token valid**:200
+- ✅ **Change password second_time successful with access token valid**:200
+- ✅ **Change password third_time successful with access token valid**:200
+- ❌ **Password match 3 last password**:400
+- ❌ **Password like profile user**:400
+- ✅ **Change password fourth_time and like password first time, successful with access token valid**:200
+- ✅ **Change password successfully with current password correct**:200
+- ❌ **Change password not successfully with current wrong**:400
+
+### 5. Logout
 
 - ✅ **Logout successful**:200
 
-### 5. Protect api
+### 6. Protect api
 
 - ✅ **Having access token, access protect api**:200
 - ❌ **Access_token expired**:401
