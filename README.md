@@ -28,3 +28,9 @@ Firstly, open Terminal and run:
     python app.py
 
 ###
+
+### 5. Run test
+
+    pytest -vv
+
+###
