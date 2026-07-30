@@ -55,6 +55,46 @@ Firstly, open Terminal and run:
 - Add many data for testcase in the future, several data not use in this project
 - Create secret_key with uuid
 
+## Summary the Test Cases
+
+Write new testcase forgot-password, login, signup because completely eliminate the type **"Auth: Token 'uuid'"**, add testcase about test_protect_api(create, protect, revoke), test_case_refresh_token(create new token), test_case_logout
+
+### 1. Signup
+
+- ✅ **Sign_up_successful** :201
+- ❌ **Test_sign_up_null_email_and_phoneNumber** :400
+- ❌ **Email exsited** :400
+- ❌ **PhoneNumber exsited** :400
+- ❌ **Password not match** :400
+- ❌ **Password is short** :400
+
+### 2. Login
+
+- ✅ **Login successful**:200
+- ❌ **Login with phoneNumber is None**:400
+- ❌ **Null password**:400
+- ❌ **Wrong password**:400
+- ❌ **Login with email not exsited**:400
+
+### 3. Forgot Password
+
+- ✅ **Signup valid, create new token, change password successful**:200
+- ❌ **Signup valid, inf profile not valid**:400
+- ❌ **Signup valid, null value**:400
+- ✅ **Signup valid, current password correct, change password successful**:200
+
+### 4. Logout
+
+- ✅ **Logout successful**:200
+
+### 5. Protect api
+
+- ✅ **Having access token, access protect api**:200
+- ❌ **Access_token expired**:401
+- ❌ **Access_token revoked**:401
+- ❌ **Access_token not in headers**:401
+- ❌ **Access_token invalid, signature edited**:422
+
 ---
 
 _return `jsonify` service for Frontend._

@@ -1,46 +1,59 @@
-def login_valid():
-    return({
-        "phone_number" : "0397618712",
+def login_with_email_and_login_valid():
+    return {
         "email" : "manhdl.ptit@gmail.com",
-        "input_password" : "Lwman8_1812"
-    })
+        "password" : "Lwman8_1812"
+    }
 
-def login_wrong_password():
-    return({
+def login_with_phoneNumber_and_login_valid():
+    return {
         "phone_number" : "0397618712",
-        "email" : "manhdl.ptit@gmail.com",
-        "input_password" : "Lwman8_181"
-    })
+        "password" : "Lwman8_1812"
+    }
 
-def login_not_found_user():
-    return({
+def login_with_phoneNumber_but_wrong_password():
+    return {
+        "phone_number" : "0397618712",
+        "password" : "Lwman8_181"
+    }
+
+def login_with_email_but_wrong_password():
+    return {
+        "email" : "manhdl.ptit@gmail.com",
+        "password" : "Lwman8_181"
+    }
+
+def login_with_email_is_null():
+    return {
+        "email" : None,
+        "password" : "Lwman8_181"
+    }
+
+def login_with_phoneNumber_is_null():
+    return {
+        "phone_number" : None,
+        "password" : "Lwman8_181"
+    }
+
+def login_with_email_and_password_is_null():
+    return {
+        "email" : "manhdl.ptit@gmail.com",
+        "password" : None
+    }
+
+def login_with_phoneNumber_and_password_is_null():
+    return {
+        "phone_number" : "0397618712",
+        "password" : None
+    }
+
+def login_with_phoneNumber_not_exsited_in_DB():
+    return {
         "phone_number" : "039761871",
-        "email" : "manhdl.tit@gmail.com",
-        "input_password" : "Lwman8_1812"
-    })
+        "password" : "Lwman8_1812"
+    }
 
-def login_not_input_username():
-    return({
-        "input_password" : "Lwman8_1812"
-    })
-
-def login_not_input_password():
-    return({
-        "phone_number" : "039761871",
-        "email" : "manhdl.tit@gmail.com"
-        # "input_password" : "Lwman8_1812"
-    })
-
-def login_valid_new_password_default():
-    return({
-        "phone_number" : "0397618712",
-        "email" : "manhdl.ptit@gmail.com",
-        "input_password" : "123456789"
-    })
-
-def login_valid_new_password_user_choose():
-    return({
-        "phone_number" : "0397618712",
-        "email" : "manhdl.ptit@gmail.com",
-        "input_password" : "12345678910"
-    })
+def login_with_email_not_exsited_in_DB():
+    return {
+        "email" : "manhdl.pti@gmail.com",
+        "password" : "Lwman8_1812"
+    }
