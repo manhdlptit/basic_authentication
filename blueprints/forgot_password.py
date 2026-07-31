@@ -13,7 +13,7 @@ forget = Blueprint("forgot-password", __name__)
 def forgot_password():
     user = get_token()
     if user is None:
-        return jsonify({"error" : "not authentic"}), 400
+        return jsonify({"error" : "not authentic"}), 401
     data = request.get_json()
     phone_number = data.get("phone_number")
     email = data.get("email")
@@ -35,7 +35,7 @@ def forgot_password():
     db.session.commit()
     return jsonify({
         "successfully" : "go to \"/new-password\" ",
-        "your token" : found_user.token
+        "your_token" : found_user.token
         })
 
     
@@ -45,7 +45,7 @@ def forgot_password():
 def new_password():
     user = get_token()
     if user is None:
-        return jsonify({"error" : "not authentic"}), 400
+        return jsonify({"error" : "not authentic"}), 401
     data = request.get_json()
     if user.change_password != "OK":
         return jsonify({"error" : "Forbidden! You must successful in \"/forgot-password\""}), 403
