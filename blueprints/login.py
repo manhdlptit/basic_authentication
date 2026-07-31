@@ -12,7 +12,7 @@ login = Blueprint("login", __name__)
 def login_user():
     user = get_token()
     if user is None:
-        return jsonify({"error" : "not authentic"}), 400
+        return jsonify({"error" : "not authentic"}), 401
     data = request.get_json()
     phone_number = data.get("phone_number")
     email = data.get("email")
