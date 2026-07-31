@@ -8,7 +8,7 @@ from blueprints.signup import signup
 from blueprints.login import login
 from model.model import db
 
-def create_app(config_filename = None):
+def create_app(config_overrides= None):
 
     app = Flask(__name__)
 
@@ -16,8 +16,8 @@ def create_app(config_filename = None):
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("SQLALCHEMY_DATABASE_URI", "sqlite:///user.db")
     app.config["SQLALCHEMY_TRACK_MODIFICATION"] = False
 
-    if config_filename:
-        app.config.update(config_filename)
+    if config_overrides:
+        app.config.update(config_overrides)
 
     db.init_app(app)
 

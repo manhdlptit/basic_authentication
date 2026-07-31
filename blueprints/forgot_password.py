@@ -35,7 +35,7 @@ def forgot_password():
     db.session.commit()
     return jsonify({
         "successfully" : "go to \"/new-password\" ",
-        "your token" : found_user.token
+        "your_token" : found_user.token
         })
 
     

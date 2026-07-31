@@ -28,7 +28,6 @@ def login_not_input_password():
     return({
         "phone_number" : "039761871",
         "email" : "manhdl.tit@gmail.com"
-        # "input_password" : "Lwman8_1812"
     })
 
 def login_valid_new_password_default():

@@ -41,7 +41,7 @@ def test_login_wrong_password(client):
 def test_login_with_not_token(client):
     payload_signup = signup_valid()
 
-    response_signup = client.post("/signup", json=payload_signup)
+    client.post("/signup", json=payload_signup)
     
     payload_login = login_valid()
 
@@ -105,7 +105,7 @@ def test_login_wrong_format_token(client):
     data_signup = response_signup.get_json()
     token = data_signup.get("token")
 
-    payload_login = login_not_input_password()
+    payload_login = login_valid()
     response_login = client.post("/login", json= payload_login, headers = {"Authentication": f"Baber {token}"})
 
     assert response_login.status_code == 401
@@ -120,8 +120,8 @@ def test_login_token_wrong(client):
     data_signup = response_signup.get_json()
     token = data_signup.get("token")
 
-    payload_login = login_not_input_password()
-    response_login = client.post("/login", json= payload_login, headers = {"Auth": f"Token {token+"k"}"})
+    payload_login = login_valid()
+    response_login = client.post("/login", json= payload_login, headers = {"Auth": f"Token {token}k"})
 
     assert response_login.status_code == 401
     assert response_login.json == {'error': 'not authentic'}

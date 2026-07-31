@@ -65,6 +65,7 @@ Write about testcase forgot-password, login, signup
 - ✅ **Change password successful**:200
 - ❌ **Inf profile invalid**:400
 - ✅ **Login with default password successful**:200
-- ❌ **Not url forgot password**:400
+- ❌ **Not url forgot password**:403
 - ❌ **Username not signup**:400
 - ❌ **Not token in header**:401
+- ❌ **Token invalid**:401
