@@ -11,16 +11,14 @@ def logout_user():
     payload = get_jwt()
 
     jti = payload["jti"]
-
     type_jwt = payload["type"]
 
     new_block_list = BlockList(jti=jti)
 
     db.session.add(new_block_list)
-
     db.session.commit()
 
     if type_jwt == "access":
-        return jsonify({"log out successfully " :"log out successfully"}), 200
+        return jsonify({"log out successfully" :"log out successfully, access token has revoked"}), 200
     if type_jwt == "refresh" :
         return jsonify({"successfully" : "revoked refresh token"}), 200

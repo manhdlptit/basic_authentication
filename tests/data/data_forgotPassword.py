@@ -4,6 +4,17 @@ def change_password_valid():
         "new_password" : "Manhdl.ptit@2026"
         }
 
+def current_password_wrong():
+    return {
+        "current_password" : "abcsjksd",
+        "new_password" : "Manhdl.ptit@2026"
+        }
+
+def current_password_default():
+    return {
+        "current_password" : "12345678",
+        "new_password" : "Manhdl.ptit@2026"
+        }
 
 def inf_user_valid():
     return {
@@ -15,7 +26,6 @@ def inf_user_valid():
         "city" : "VT"
     }
 
-
 def inf_user_but_wrong_fullName():
     return {
         "full_name" : "Le Duc Man",
@@ -26,7 +36,6 @@ def inf_user_but_wrong_fullName():
         "city" : "VT"
     }
 
-
 def inf_user_but_wrong_phoneNumber():
     return {
         "full_name" : "Le Duc Manh",
@@ -36,7 +45,6 @@ def inf_user_but_wrong_phoneNumber():
         "country" : "VN",
         "city" : "VT"
     }
-
 
 def inf_user_but_wrong_email():
     return {
@@ -59,7 +67,6 @@ def inf_user_but_wrong_address():
         "city" : "VT"
     }
 
-
 def inf_user_but_wrong_country():
     return {
         "full_name" : "Le Duc Manh",
@@ -69,7 +76,6 @@ def inf_user_but_wrong_country():
         "country" : "V",
         "city" : "VT"
     }
-
 
 def inf_user_but_wrong_city():
     return {
@@ -81,7 +87,6 @@ def inf_user_but_wrong_city():
         "city" : "V"
     }
 
-
 def inf_user_but_fullName_is_None():
     return {
         "full_name" : None,
@@ -91,7 +96,6 @@ def inf_user_but_fullName_is_None():
         "country" : "VN",
         "city" : "VT"
     }
-
 
 def inf_user_but_phoneNumber_is_None():
     return {
@@ -103,7 +107,6 @@ def inf_user_but_phoneNumber_is_None():
         "city" : "VT"
     }
 
-
 def inf_user_but_email_is_None():
     return {
         "full_name" : "Le Duc Manh",
@@ -113,7 +116,6 @@ def inf_user_but_email_is_None():
         "country" : "VN",
         "city" : "VT"
     }
-
 
 def inf_user_but_address_is_None():
     return {
@@ -125,7 +127,6 @@ def inf_user_but_address_is_None():
         "city" : "VT"
     }
 
-
 def inf_user_but_country_is_None():
     return {
         "full_name" : "Le Duc Manh",
@@ -135,7 +136,6 @@ def inf_user_but_country_is_None():
         "country" : None,
         "city" : "VT"
     }
-
 
 def inf_user_but_city_is_None():
     return {
@@ -147,8 +147,7 @@ def inf_user_but_city_is_None():
         "city" : None
     }
 
-
-def inf_user_but_email_not_exsited():
+def inf_user_but_email_not_existed():
     return {
         "full_name" : "Le Duc Manh",
         "phone_number" : "0397618712",
@@ -158,8 +157,7 @@ def inf_user_but_email_not_exsited():
         "city" : "VT"
         }
 
-
-def inf_user_but_phoneNumber_not_exsited():
+def inf_user_but_phoneNumber_not_existed():
     return {
         "full_name" : "Le Duc Manh",
         "phone_number" : "039761872",

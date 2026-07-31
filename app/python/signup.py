@@ -1,6 +1,6 @@
 from flask import Blueprint, request, jsonify
 from werkzeug.security import generate_password_hash
-from flask_jwt_extended import create_access_token, create_refresh_token
+from flask_jwt_extended import create_access_token, create_refresh_token, decode_token
 
 from app.data.datetime_jwt import expires_delta_refresh
 from app.model.model import User, db, Password
@@ -37,10 +37,10 @@ def signup_user():
     find_email = User.query.filter(User.email == email).first()
 
     if find_phone_number is not None:
-        return jsonify({"Error" : "Phone number exsited !"}), 400
+        return jsonify({"Error" : "Phone number existed !"}), 400
     
     if find_email is not None:
-        return jsonify({"Error" : "Email exsited !"}), 400
+        return jsonify({"Error" : "Email existed !"}), 400
     
     if len(input_password) < 8 or len(input_password) > 32:
         return jsonify({"Error" : "Password between 8 and 32 characters"}), 400
@@ -70,5 +70,10 @@ def signup_user():
     access_token = create_access_token(identity=new_user)
     re_fresh_token = create_refresh_token(identity=new_user,expires_delta= expires_delta_refresh)
 
-    return jsonify(access_token = access_token, re_fresh_token = re_fresh_token), 201
+    id_user = (decode_token(encoded_token=access_token))["sub"]
+    exp_token = (decode_token(encoded_token=access_token))["exp"]
+
+    return jsonify(access_token = access_token, re_fresh_token = re_fresh_token, id_user = id_user, exp_token = exp_token), 201
+
+
 

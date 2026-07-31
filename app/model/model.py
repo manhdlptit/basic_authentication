@@ -16,7 +16,6 @@ class User(db.Model):
     password = db.Column(db.String(500))
 
     password_history = db.relationship('Password', backref=db.backref('pw', lazy=True))
-    
 
     def __init__(self, full_name, phone_number, email, address, country, city, password):
         self.full_name = full_name
@@ -35,8 +34,6 @@ class Password(db.Model):
     date = db.Column(db.DateTime)
     password_used = db.Column(db.Text)
     id_user = db.Column(db.Integer, db.ForeignKey("inf_user.id"))
-
-
 
     def __init__(self, date, password_used, id_user):
         self.date = date

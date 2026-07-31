@@ -16,12 +16,15 @@ from app.python.re_fresh_token import re_tk
 from app.python.forgot_password import forgot_password
 from datetime import timedelta
 
-def create_app():
+def create_app(config_overrides= None):
     app = Flask(__name__)
 
     app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "295cf9403f60488db75622286b422803")
     app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQLALCHEMY_DATABASE_URI", "sqlite:///user.db")
     app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(minutes=int(os.getenv("JWT_ACCESS_TOKEN_EXPIRES", 5)))
+
+    if config_overrides:
+        app.config.update(config_overrides)
     
     db.init_app(app)
     jwt.init_app(app)
@@ -34,7 +37,5 @@ def create_app():
     app.register_blueprint(re_tk)
     app.register_blueprint(forgot_password)
 
-    with app.app_context():
-        db.create_all()
 
     return app

@@ -1,22 +1,23 @@
 import pytest
 
-from main import app
+from app import create_app
 from app.model.model import db
 
 @pytest.fixture
 def cr_app():
-    app.config.update({
+    app = create_app({
         "TESTING" : True,
-        "SQLALCHEMY_URI_DATABASE" : "sqlite:///:memory:"
+        "SQLALCHEMY_DATABASE_URI" : "sqlite:///:memory:"
     })
-
+            
     with app.app_context():
         db.create_all()
         yield app
+        db.session.remove()
         db.drop_all()
 
 @pytest.fixture
 def client(cr_app):
-    return app.test_client()
+    return cr_app.test_client()
 
 

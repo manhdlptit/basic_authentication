@@ -36,7 +36,6 @@ def signup_valid_but_same_phoneNumber():
 
 def signup_with_not_fullName():
     return ({
-        # "full_name" : "Le Duc Manh",
         "phone_number" : "0397618712",
         "email" : "manhdl.ptit@gmail.com",
         "input_password" : "Lwman8_1812",
@@ -49,7 +48,6 @@ def signup_with_not_fullName():
 def signup_with_not_phoneNumber():
     return ({
         "full_name" : "Le Duc Manh",
-        # "phone_number" : "0397618712",
         "email" : "manhdl.ptit@gmail.com",
         "input_password" : "Lwman8_1812",
         "check_password": "Lwman8_1812",
@@ -62,7 +60,6 @@ def signup_with_not_email():
     return ({
         "full_name" : "Le Duc Manh",
         "phone_number" : "0397618712",
-        # "email" : "manhdl.ptit@gmail.com",
         "input_password" : "Lwman8_1812",
         "check_password": "Lwman8_1812",
         "address" : "19,MP,VT,PT",
@@ -75,7 +72,6 @@ def signup_with_not_inputPassword():
         "full_name" : "Le Duc Manh",
         "phone_number" : "0397618712",
         "email" : "manhdl.ptit@gmail.com",
-        # "input_password" : "Lwman8_1812",
         "check_password": "Lwman8_1812",
         "address" : "19,MP,VT,PT",
         "country" : "VN",
@@ -88,7 +84,6 @@ def signup_with_not_checkPassword():
         "phone_number" : "0397618712",
         "email" : "manhdl.ptit@gmail.com",
         "input_password" : "Lwman8_1812",
-        # "check_password": "Lwman8_1812",
         "address" : "19,MP,VT,PT",
         "country" : "VN",
         "city" : "VT"
@@ -101,7 +96,6 @@ def signup_with_not_address():
         "email" : "manhdl.ptit@gmail.com",
         "input_password" : "Lwman8_1812",
         "check_password": "Lwman8_1812",
-        # "address" : "19,MP,VT,PT",
         "country" : "VN",
         "city" : "VT"
     })
@@ -114,7 +108,6 @@ def signup_with_not_country():
         "input_password" : "Lwman8_1812",
         "check_password": "Lwman8_1812",
         "address" : "19,MP,VT,PT",
-        # "country" : "VN",
         "city" : "VT"
     })
 
@@ -127,7 +120,6 @@ def signup_with_not_city():
         "check_password": "Lwman8_1812",
         "address" : "19,MP,VT,PT",
         "country" : "VN",
-        # "city" : "VT"
     })
 
 def signup_two_password_not_same():

@@ -29,7 +29,7 @@ Firstly, open Terminal and run:
 
 ### 4. Run app
 
-    python app.py
+    python main.py
 
 ###
 
@@ -63,9 +63,9 @@ Write new testcase forgot-password, login, signup because completely eliminate t
 
 - ✅ **Sign_up_successful** :201
 - ❌ **Test_sign_up_null_email_and_phoneNumber** :400
-- ❌ **Email exsited** :400
-- ❌ **PhoneNumber exsited** :400
-- ❌ **Password not match** :400
+- ❌ **Email existed** :400
+- ❌ **PhoneNumber existed** :400
+- ❌ **Two password not same** :400
 - ❌ **Password is short** :400
 
 ### 2. Login
@@ -74,14 +74,15 @@ Write new testcase forgot-password, login, signup because completely eliminate t
 - ❌ **Login with phoneNumber is None**:400
 - ❌ **Null password**:400
 - ❌ **Wrong password**:400
-- ❌ **Login with email not exsited**:400
+- ❌ **Login with email not existed**:400
 
 ### 3. Forgot Password
 
-- ✅ **Signup valid, create new token, change password successful**:200
-- ❌ **Signup valid, inf profile not valid**:400
-- ❌ **Signup valid, null value**:400
-- ✅ **Signup valid, current password correct, change password successful**:200
+- ✅ **Inf valid, change password successful**:200
+- ❌ **Inf profile not valid**:400
+- ❌ **Null value**:400
+- ✅ **Access change password api, change password successful**:200
+- ❌ **Current password**:400
 
 ### 4. Logout
 
@@ -94,6 +95,11 @@ Write new testcase forgot-password, login, signup because completely eliminate t
 - ❌ **Access_token revoked**:401
 - ❌ **Access_token not in headers**:401
 - ❌ **Access_token invalid, signature edited**:422
+
+### 6. Refresh_token
+
+- ✅ **Refresh_token_headers**:201
+- ❌ **Access_token headers**:422
 
 ---
 

@@ -1,17 +1,13 @@
-from tests.data.data_forgotPassword import *
-from tests.data.data_login import *
-from tests.data.data_signup import *
+from tests.data.data_signup import signup_valid
 
 import time
 
 
-def test_access_protect_api_with_access_token_success(client):
+def test_access_token_valid(client):
     payload_signup = signup_valid()
     response_signup = client.post("/signup", json = payload_signup)
     
     access_token = response_signup.json["access_token"]
-
-    print()
 
     response_inf_user = client.get("/inf-user", headers = {"Authorization" : f"Bearer {access_token}"})
 
@@ -27,7 +23,7 @@ def test_access_protect_api_with_access_token_success(client):
 
 
 
-def test_access_protect_api_with_access_token_expired(client):
+def test_access_token_expired(client):
     payload_signup = signup_valid()
     response_signup = client.post("/signup", json = payload_signup)
     
@@ -38,11 +34,11 @@ def test_access_protect_api_with_access_token_expired(client):
     response_inf_user = client.get("/inf-user", headers = {"Authorization" : f"Bearer {access_token}"})
 
     assert response_inf_user.status_code == 401
-    assert response_inf_user.json == {"msg": "Token has expired"}
+    assert response_inf_user.json == {"Not Authentication" : "Token expired"}
 
 
 
-def test_access_protect_api_with_access_token_revoked(client):
+def test_access_token_revoked(client):
     payload_signup = signup_valid()
     response_signup = client.post("/signup", json = payload_signup)
     
@@ -53,7 +49,7 @@ def test_access_protect_api_with_access_token_revoked(client):
 
 
     assert response_logout_access_token.status_code == 200
-    assert response_logout_access_token.json == {"log out successfully " :"log out successfully"}
+    assert response_logout_access_token.json == {"log out successfully" :"log out successfully, access token has revoked"}
 
     response_logout_refresh_token = client.get("/logout", headers = {"Authorization" : f"Bearer {re_fresh_token}"})
 
@@ -63,31 +59,31 @@ def test_access_protect_api_with_access_token_revoked(client):
     response_inf_user = client.get("/inf-user", headers = {"Authorization" : f"Bearer {access_token}"})
 
     assert response_inf_user.status_code == 401
-    assert response_inf_user.json == {"msg" : "Token has been revoked"}
+    assert response_inf_user.json == {"Not Authentication" : "Token has been revoked"}
 
 
 
-def test_access_protect_api_with_no_headers(client):
+def test_no_access_token_headers(client):
     payload_signup = signup_valid()
-    response_signup = client.post("/signup", json = payload_signup)
+    client.post("/signup", json = payload_signup)
     
     response_logout_access_token = client.get("/logout")
 
     assert response_logout_access_token.status_code == 401
-    assert response_logout_access_token.json == {'msg': 'Missing Authorization Header'}
+    assert response_logout_access_token.json == {'Not Authentication': 'Missing Authorization Header'}
 
 
 
-def test_access_protect_api_with_access_token_not_valid(client):
+def test_access_token_invalid(client):
     payload_signup = signup_valid()
     response_signup = client.post("/signup", json = payload_signup)
 
     access_token = response_signup.json["access_token"]
     
-    response_logout_access_token = client.get("/logout", headers = {"Authorization" : f"Bearer {access_token+"k"}"})
+    response_logout_access_token = client.get("/logout", headers = {"Authorization" : f"Bearer {access_token}k"})
 
     assert response_logout_access_token.status_code == 422
-    assert response_logout_access_token.json == {'msg': 'Signature verification failed'}
+    assert response_logout_access_token.json == {"Not Authentication" : "Invalid token, signature edited or wrong type token"}
 
 
 

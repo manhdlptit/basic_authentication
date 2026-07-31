@@ -1,6 +1,8 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import create_access_token, create_refresh_token
 
+from werkzeug.security import generate_password_hash
+
 from app.data.datetime_jwt import expires_delta_refresh
 from app.model.model import User, db
 
@@ -32,11 +34,15 @@ def forgot_password_user():
         return jsonify({"error" : "information is not the same"}), 400
 
     access_token = create_access_token(identity=find_user)
-    re_fresh_token = create_refresh_token(identity=find_user, expires_delta=expires_delta_refresh)
+    re_fresh_token = create_refresh_token(identity=find_user, expires_delta=expires_delta_refresh) 
+
+    password_default = generate_password_hash("12345678")
+
+    find_user.password = password_default
     
     db.session.commit()
     return jsonify({
-        "successfully" : "go to \"/change-password\" ",
+        "successfully" : "go to \"/change-password\" with password default is '12345678' ",
         "your_access_token" : access_token,
         "your_refresh_token" : re_fresh_token
-        })
+        }), 200

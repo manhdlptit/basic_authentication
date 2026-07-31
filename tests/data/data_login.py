@@ -46,13 +46,13 @@ def login_with_phoneNumber_and_password_is_null():
         "password" : None
     }
 
-def login_with_phoneNumber_not_exsited_in_DB():
+def login_with_phoneNumber_not_existed_in_DB():
     return {
         "phone_number" : "039761871",
         "password" : "Lwman8_1812"
     }
 
-def login_with_email_not_exsited_in_DB():
+def login_with_email_not_existed_in_DB():
     return {
         "email" : "manhdl.pti@gmail.com",
         "password" : "Lwman8_1812"
