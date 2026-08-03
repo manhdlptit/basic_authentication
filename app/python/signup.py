@@ -1,8 +1,7 @@
 from flask import Blueprint, request, jsonify
 from werkzeug.security import generate_password_hash
-from flask_jwt_extended import create_access_token, create_refresh_token, decode_token
+from flask_jwt_extended import create_access_token, create_refresh_token
 
-from app.data.datetime_jwt import expires_delta_refresh
 from app.model.model import User, db, Password
 
 from datetime import datetime
@@ -13,7 +12,7 @@ signup = Blueprint("signup", __name__)
 def signup_user():
     data = request.get_json()
 
-    fullname = data.get("full_name", None)  
+    full_name = data.get("full_name", None)  
     phone_number = data.get("phone_number", None)  
     email = data.get("email", None)  
     address = data.get("address", None)  
@@ -23,15 +22,14 @@ def signup_user():
     check_password = data.get("check_password", None)
 
     
-    if (fullname 
-        and phone_number
-        and email
-        and address
-        and country
-        and city
-        and input_password
-        and check_password) is None:
-        return jsonify({"Error" : "Not null any value"}), 400
+    if not full_name:
+        return jsonify({"Error" : "Missing fullname"}), 400
+    
+    if not phone_number or not email:
+        return jsonify({"Error" : "Missing username"}), 400
+
+    if not input_password:
+        return jsonify({"Error" : "Missing password"}), 400
     
     find_phone_number = User.query.filter(User.phone_number == phone_number).first()
     find_email = User.query.filter(User.email == email).first()
@@ -50,7 +48,7 @@ def signup_user():
     
     password = generate_password_hash(input_password)
 
-    new_user = User(full_name=fullname, 
+    new_user = User(full_name=full_name, 
                     phone_number=phone_number, 
                     email=email,
                     address=address,
@@ -68,12 +66,9 @@ def signup_user():
     db.session.commit()
 
     access_token = create_access_token(identity=new_user)
-    re_fresh_token = create_refresh_token(identity=new_user,expires_delta= expires_delta_refresh)
+    refresh_token = create_refresh_token(identity=new_user)
 
-    id_user = (decode_token(encoded_token=access_token))["sub"]
-    exp_token = (decode_token(encoded_token=access_token))["exp"]
-
-    return jsonify(access_token = access_token, re_fresh_token = re_fresh_token, id_user = id_user, exp_token = exp_token), 201
+    return jsonify(access_token = access_token, refresh_token = refresh_token), 201
 
 
 

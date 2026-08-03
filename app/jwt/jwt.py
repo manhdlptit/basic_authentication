@@ -12,8 +12,8 @@ def loader_identity(user):
 
 @jwt.user_lookup_loader
 def lookup_loader(header, payload):
-    id = payload["sub"]
-    find_user = User.query.filter(User.id == id).first()
+    user_id = payload["sub"]
+    find_user = User.query.filter(User.id == user_id).first()
     return find_user
 
 
@@ -32,7 +32,7 @@ def return_message_expired_token(header, payload):
 
 @jwt.invalid_token_loader
 def return_message_invalid_token(error):
-    return jsonify({"Not Authentication" : "Invalid token, signature edited or wrong type token"}), 422
+    return jsonify({"Not Authentication" : "Invalid token, signature edited or wrong type token"}), 401
 
 
 @jwt.revoked_token_loader

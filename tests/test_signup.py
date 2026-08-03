@@ -7,18 +7,27 @@ from tests.data.data_signup import (signup_valid,
 from flask_jwt_extended import decode_token
 
 
-def test_sign_up_with_successful(client):
+def test_not_null_value_successful(client):
     payload = signup_valid()
     response = client.post("/signup", json=payload)
 
     access_token = response.json["access_token"]
-    re_fresh_token = response.json["re_fresh_token"]
-
-    id_user = (decode_token(encoded_token=access_token))["sub"]
-    exp_token = (decode_token(encoded_token=access_token))["exp"]
+    refresh_token = response.json["refresh_token"]
 
     assert response.status_code == 201
-    assert response.json == {"access_token" : access_token, "re_fresh_token" : re_fresh_token, "id_user": id_user, "exp_token":exp_token}
+    assert response.json == {"access_token" : access_token, "refresh_token" : refresh_token}
+
+
+
+def test_null_not_important_value_successful(client):
+    payload = signup_valid()
+    response = client.post("/signup", json=payload)
+
+    access_token = response.json["access_token"]
+    refresh_token = response.json["refresh_token"]
+
+    assert response.status_code == 201
+    assert response.json == {"access_token" : access_token, "refresh_token" : refresh_token}
 
 
 
@@ -27,7 +36,7 @@ def test_null_email_and_phoneNumber(client):
     response = client.post("/signup", json=payload)
 
     assert response.status_code == 400
-    assert response.json == {"Error" : "Not null any value"}
+    assert response.json == {"Error" : "Missing username"}
 
 
 

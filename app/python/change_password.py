@@ -1,8 +1,7 @@
 from flask import Blueprint, jsonify, request
-from flask_jwt_extended import jwt_required, get_jwt_identity, create_access_token, create_refresh_token
-from werkzeug.security import generate_password_hash, check_password_hash
+from flask_jwt_extended import jwt_required, get_jwt_identity
+from werkzeug.security import generate_password_hash
 
-from app.data.datetime_jwt import expires_delta_refresh
 from app.model.model import User, Password, db
 
 from datetime import datetime
@@ -12,15 +11,11 @@ change_password = Blueprint("change_password", __name__)
 @change_password.route("/change-password", methods = ["POST"])
 @jwt_required()
 def change_password_when_logged_in():
-    current_password = request.json.get("current_password")
     new_password = request.json.get("new_password")
 
     id = get_jwt_identity()
                 
     find_user = User.query.filter(User.id == int(id)).first()
-
-    if not check_password_hash(find_user.password, current_password):
-        return jsonify({"Error" : "Password current not correct"}), 400
 
     if len(new_password) < 8 or len(new_password) > 32:
         return jsonify({"Error" : "Password between 8 and 32 characters"}), 400

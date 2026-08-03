@@ -14,10 +14,10 @@ def test_login_successfully(client):
     response_login = client.post("/login", json = payload_login)
 
     access_token = response_login.json["access_token"]
-    re_fresh_token = response_login.json["re_fresh_token"]
+    refresh_token = response_login.json["refresh_token"]
 
     assert response_login.status_code == 200
-    assert response_login.json == {"access_token" : access_token, "re_fresh_token" : re_fresh_token}
+    assert response_login.json == {"access_token" : access_token, "refresh_token" : refresh_token}
 
 
 
@@ -29,7 +29,7 @@ def test_phoneNumber_is_None(client):
     response_login = client.post("/login", json = payload_login)
     
     assert response_login.status_code == 400
-    assert response_login.json == {"Error" : "Not null any value"}
+    assert response_login.json == {"Error" : "Not null username"}
 
 
 
@@ -41,7 +41,7 @@ def test_password_is_None(client):
     response_login = client.post("/login", json = payload_login)
         
     assert response_login.status_code == 400
-    assert response_login.json == {"Error" : "Not null any value"}
+    assert response_login.json == {"Error" : "Not null password"}
 
 
 

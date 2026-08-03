@@ -12,16 +12,17 @@ from app.python.login import login
 from app.python.signup import signup
 from app.python.inf_user import inf_user
 from app.python.logout import logout
-from app.python.re_fresh_token import re_tk
+from app.python.refresh_token import refresh_token
 from app.python.forgot_password import forgot_password
 from datetime import timedelta
 
 def create_app(config_overrides= None):
     app = Flask(__name__)
 
-    app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "295cf9403f60488db75622286b422803")
-    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQLALCHEMY_DATABASE_URI", "sqlite:///user.db")
-    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(minutes=int(os.getenv("JWT_ACCESS_TOKEN_EXPIRES", 5)))
+    app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")
+    app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQLALCHEMY_DATABASE_URI")
+    app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(minutes=int(os.getenv("JWT_ACCESS_TOKEN_EXPIRES")))
+    app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(days=int(os.getenv("JWT_REFRESH_TOKEN_EXPIRES")))
 
     if config_overrides:
         app.config.update(config_overrides)
@@ -34,8 +35,8 @@ def create_app(config_overrides= None):
     app.register_blueprint(signup)
     app.register_blueprint(inf_user)
     app.register_blueprint(logout)
-    app.register_blueprint(re_tk)
+    app.register_blueprint(refresh_token)
     app.register_blueprint(forgot_password)
 
-
+    print(os.getenv("SECRET_KEY"))
     return app

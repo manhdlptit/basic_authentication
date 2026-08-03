@@ -2,15 +2,15 @@
 
 ## 1. Config code
 
-Config app imported from os, get the first parameter, the second parameter used preventive
+Config app imported from os, takes only one parameter
 
-`app.config["SECRET_KEY"] = os.getenv("SECRET_KEY", "295cf9403f60488db75622286b422803")`
+`app.config["SECRET_KEY"] = os.getenv("SECRET_KEY")`
 
-`app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQLALCHEMY_DATABASE_URI", "sqlite:///user.db")`
+`app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("SQLALCHEMY_DATABASE_URI")`
 
-`app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(minutes=int(os.getenv("JWT_ACCESS_TOKEN_EXPIRES", 5)))`
+`app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(minutes=int(os.getenv("JWT_ACCESS_TOKEN_EXPIRES")))`
 
-Only access_token has expiration in file .env, refresh token is configured in “app/data/datetime_jwt.py” because I want the refresh token expire in specific time
+`app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(days=int(os.getenv("JWT_REFRESH_TOKEN_EXPIRES")))`
 
 ## 2. Config JWT
 
@@ -32,17 +32,15 @@ Decorator `unauthorized_loader` : is used to return message error when missing t
 
 ### Config datetime
 
-Save in app/data/datetime_jwt.py with fresh_token
+Save in .env file with access_token and refresh_token
 
-`target_time = datetime(2026,12,31,23,59,59)`
-
-Expires at the beginning of 2027
-
-Save in .env file with access_token
-
-`app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(minutes=int(os.getenv("JWT_ACCESS_TOKEN_EXPIRES", 5)))`
+`app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(minutes=int(os.getenv("JWT_ACCESS_TOKEN_EXPIRES")))`
 
 Expires 5 minute after creation
+
+`app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(days=int(os.getenv("JWT_REFRESH_TOKEN_EXPIRES")))`
+
+Expires 30 day after creation
 
 ## 3. Explain JWT in my coding
 
@@ -60,7 +58,7 @@ Create access_token and refresh_token when login or signup, with identity is “
 
 Time expire access_token is defined in init.py, function `create_access_token()` get automatic
 
-Time expire refresh_token is defined in app/data/datetime_jwt.py, function `create_refresh_token()` with parameter name expires_delta and value is gotexpires_delta_refresh
+Time expire refresh_token is defined in init.py, function `create_refresh_token()` get automatic
 
 ### 3.3. Access api protected
 
@@ -73,7 +71,3 @@ The decorator `@jwt_required()` with parameter name is refreshand value is True 
 ### 3.5. Logout - revoke token
 
 When send both access_token and refresh_token in headers, loggout successfully, save “jti” per token in DB. Decorator `token_in_blocklist_loader` query in DB to assess token valid or invalid(revoked) when send token in headers, if revoked, deny access.
-
-### 3.6. Decode in signup
-
-Function `decode_token` to decode token, is returned dict - key:value, take key like "sub" to return "id_user" or take key "exp" to return timestamp

@@ -1,20 +1,8 @@
 def change_password_valid():
     return {
-        "current_password" : "Lwman8_1812",
         "new_password" : "Manhdl.ptit@2026"
         }
 
-def current_password_wrong():
-    return {
-        "current_password" : "abcsjksd",
-        "new_password" : "Manhdl.ptit@2026"
-        }
-
-def current_password_default():
-    return {
-        "current_password" : "12345678",
-        "new_password" : "Manhdl.ptit@2026"
-        }
 
 def inf_user_valid():
     return {
@@ -24,6 +12,16 @@ def inf_user_valid():
         "address" : "19,MP,VT,PT",
         "country" : "VN",
         "city" : "VT"
+    }
+
+def inf_user_null_not_important_value():
+    return {
+        "full_name" : "Le Duc Manh",
+        "phone_number" : "0397618712",
+        "email" : "manhdl.ptit@gmail.com",
+        "address" : None,
+        "country" : None,
+        "city" : None
     }
 
 def inf_user_but_wrong_fullName():

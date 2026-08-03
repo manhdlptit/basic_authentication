@@ -29,7 +29,7 @@ def test_access_token_expired(client):
     
     access_token = response_signup.json["access_token"]
 
-    time.sleep(301)
+    time.sleep(5)
 
     response_inf_user = client.get("/inf-user", headers = {"Authorization" : f"Bearer {access_token}"})
 
@@ -43,15 +43,15 @@ def test_access_token_revoked(client):
     response_signup = client.post("/signup", json = payload_signup)
     
     access_token = response_signup.json["access_token"]
-    re_fresh_token = response_signup.json["re_fresh_token"]
+    refresh_token = response_signup.json["refresh_token"]
 
-    response_logout_access_token = client.get("/logout", headers = {"Authorization" : f"Bearer {access_token}"})
+    response_logout_access_token = client.post("/logout", headers = {"Authorization" : f"Bearer {access_token}"})
 
 
     assert response_logout_access_token.status_code == 200
-    assert response_logout_access_token.json == {"log out successfully" :"log out successfully, access token has revoked"}
+    assert response_logout_access_token.json == {"successfully": "access token has revoked"}
 
-    response_logout_refresh_token = client.get("/logout", headers = {"Authorization" : f"Bearer {re_fresh_token}"})
+    response_logout_refresh_token = client.post("/logout", headers = {"Authorization" : f"Bearer {refresh_token}"})
 
     assert response_logout_refresh_token.status_code == 200
     assert response_logout_refresh_token.json == {"successfully" : "revoked refresh token"}
@@ -67,7 +67,7 @@ def test_no_access_token_headers(client):
     payload_signup = signup_valid()
     client.post("/signup", json = payload_signup)
     
-    response_logout_access_token = client.get("/logout")
+    response_logout_access_token = client.post("/logout")
 
     assert response_logout_access_token.status_code == 401
     assert response_logout_access_token.json == {'Not Authentication': 'Missing Authorization Header'}
@@ -80,9 +80,9 @@ def test_access_token_invalid(client):
 
     access_token = response_signup.json["access_token"]
     
-    response_logout_access_token = client.get("/logout", headers = {"Authorization" : f"Bearer {access_token}k"})
+    response_logout_access_token = client.post("/logout", headers = {"Authorization" : f"Bearer {access_token}k"})
 
-    assert response_logout_access_token.status_code == 422
+    assert response_logout_access_token.status_code == 401
     assert response_logout_access_token.json == {"Not Authentication" : "Invalid token, signature edited or wrong type token"}
 
 

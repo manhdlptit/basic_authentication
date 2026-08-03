@@ -1,4 +1,5 @@
 import pytest
+import datetime
 
 from app import create_app
 from app.model.model import db
@@ -7,7 +8,8 @@ from app.model.model import db
 def cr_app():
     app = create_app({
         "TESTING" : True,
-        "SQLALCHEMY_DATABASE_URI" : "sqlite:///:memory:"
+        "SQLALCHEMY_DATABASE_URI" : "sqlite:///:memory:",
+        "JWT_ACCESS_TOKEN_EXPIRES" : datetime.timedelta(seconds=2)
     })
             
     with app.app_context():
