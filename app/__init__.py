@@ -38,5 +38,4 @@ def create_app(config_overrides= None):
     app.register_blueprint(refresh_token)
     app.register_blueprint(forgot_password)
 
-    print(os.getenv("SECRET_KEY"))
     return app
