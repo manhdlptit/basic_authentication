@@ -18,10 +18,10 @@ def forgot_password_user():
     city = data.get("city")
     full_name = data.get("full_name")
 
-    if not full_name:
+    if not full_name.replace(" ",""):
         return jsonify({"Error" : "Missing fullname"}), 400
 
-    if not phone_number or not email:
+    if not phone_number.replace(" ","") or not email.replace(" ",""):
         return jsonify({"Error" : "Missing username"}), 400
 
     find_user = User.query.filter((User.email == email) | (User.phone_number == phone_number)).first()

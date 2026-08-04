@@ -15,10 +15,10 @@ def login_user():
     phone_number = data.get("phone_number")
     password = data.get("password")
     
-    if not email and not phone_number:
+    if not email.replace(" ","") and not phone_number.replace(" ",""):
         return jsonify({"Error" : "Not null username"}), 400
     
-    if not password:
+    if not password.replace(" ",""):
         return jsonify({"Error" : "Not null password"}), 400
     
     check_user = User.query.filter((User.email == email) | (User.phone_number == phone_number)).first()
