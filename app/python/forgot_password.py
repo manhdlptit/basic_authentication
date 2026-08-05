@@ -1,9 +1,7 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import create_access_token, create_refresh_token
 
-from werkzeug.security import generate_password_hash
-
-from app.model.model import User, db
+from app.model.model import User
 
 forgot_password = Blueprint("forgot_password", __name__)
 

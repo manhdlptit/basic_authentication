@@ -17,6 +17,9 @@ def change_password_when_logged_in():
                 
     find_user = User.query.filter(User.id == int(id)).first()
 
+    if not new_password.replace(" ",""):
+        return jsonify({"Error" : "Must input new password"}), 400
+
     if len(new_password) < 8 or len(new_password) > 32:
         return jsonify({"Error" : "Password between 8 and 32 characters"}), 400
     

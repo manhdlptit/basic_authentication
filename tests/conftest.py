@@ -9,7 +9,9 @@ def cr_app():
     app = create_app({
         "TESTING" : True,
         "SQLALCHEMY_DATABASE_URI" : "sqlite:///:memory:",
-        "JWT_ACCESS_TOKEN_EXPIRES" : datetime.timedelta(seconds=2)
+        "SECRET_KEY" : "sfjlakjjaslfjlsafkkhkhkhkhkhkhkhkhkjhkjlfjsa",
+        "JWT_ACCESS_TOKEN_EXPIRES" : datetime.timedelta(minutes=15),
+        "JWT_REFRESH_TOKEN_EXPIRES" : datetime.timedelta(days=30)
     })
             
     with app.app_context():

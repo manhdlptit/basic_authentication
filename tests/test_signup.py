@@ -4,7 +4,6 @@ from tests.data.data_signup import (signup_valid,
                                     signup_valid_but_same_phoneNumber,
                                     signup_two_password_not_same,
                                     signup_password_shorter_than_8_character)
-from flask_jwt_extended import decode_token
 
 
 def test_not_null_value_successful(client):

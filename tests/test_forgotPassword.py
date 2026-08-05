@@ -1,7 +1,5 @@
 from tests.data.data_signup import signup_valid, sign_up_null_value_not_important
 from tests.data.data_forgotPassword import (inf_user_valid, 
-                                            inf_user_but_phoneNumber_not_existed,
-                                            inf_user_but_address_is_None,
                                             change_password_valid,
                                             inf_user_null_not_important_value
                                            )
@@ -69,7 +67,6 @@ def test_access_change_password_successfully(client):
     response_signup = client.post("/signup", json = payload_signup)
 
     access_token = response_signup.json["access_token"]
-    refresh_token = response_signup.json["refresh_token"]
 
     payload_change_password = change_password_valid()
     response_change_password = client.post("/change-password", json = payload_change_password, headers = {"Authorization" : f"Bearer {access_token}"})

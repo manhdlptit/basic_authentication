@@ -1,6 +1,8 @@
 from tests.data.data_signup import signup_valid
 
-import time
+from freezegun import freeze_time
+
+import datetime
 
 
 def test_access_token_valid(client):
@@ -24,17 +26,18 @@ def test_access_token_valid(client):
 
 
 def test_access_token_expired(client):
-    payload_signup = signup_valid()
-    response_signup = client.post("/signup", json = payload_signup)
+    with freeze_time("2000-01-01 12:00:00") as frozen_time:
+        payload_signup = signup_valid()
+        response_signup = client.post("/signup", json = payload_signup)
     
-    access_token = response_signup.json["access_token"]
+        access_token = response_signup.json["access_token"]
 
-    time.sleep(5)
+        frozen_time.tick(datetime.timedelta(minutes=5))
 
-    response_inf_user = client.get("/inf-user", headers = {"Authorization" : f"Bearer {access_token}"})
+        response_inf_user = client.get("/inf-user", headers = {"Authorization" : f"Bearer {access_token}"})
 
-    assert response_inf_user.status_code == 401
-    assert response_inf_user.json == {"Not Authentication" : "Token expired"}
+        assert response_inf_user.status_code == 401
+        assert response_inf_user.json == {"Not Authentication" : "Token expired"}
 
 
 
