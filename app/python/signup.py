@@ -12,26 +12,26 @@ signup = Blueprint("signup", __name__)
 def signup_user():
     data = request.get_json()
 
-    full_name = data.get("full_name", None)  
-    phone_number = data.get("phone_number", None)  
-    email = data.get("email", None)  
-    address = data.get("address", None)  
-    country = data.get("country", None)  
-    city = data.get("city", None)  
-    input_password = data.get("input_password", None)  
-    check_password = data.get("check_password", None)
-
+    full_name = data.get("full_name", "")  
+    phone_number = data.get("phone_number", "")  
+    email = data.get("email", "")  
+    address = data.get("address", "")  
+    country = data.get("country", "")  
+    city = data.get("city", "")  
+    input_password = data.get("input_password", "")  
+    check_password = data.get("check_password", "")
     
-
-    
-    if not full_name.replace(" ",""):
+    if not full_name or not full_name.replace(" ",""):
         return jsonify({"Error" : "Missing fullname"}), 400
     
-    if not phone_number.replace(" ","") or not email.replace(" ",""):
-        return jsonify({"Error" : "Missing username"}), 400
+    if not phone_number or not phone_number.replace(" ",""):
+        return jsonify({"Error" : "Missing phone number"}), 400
+    
+    if not email or not email.replace(" ",""):
+        return jsonify({"Error" : "Missing email"}), 400
 
     if not input_password.replace(" ",""):
-        return jsonify({"Error" : "Missing password"}), 400
+        return jsonify({"Error" : "Missing input password"}), 400
     
     find_phone_number = User.query.filter(User.phone_number == phone_number).first()
     find_email = User.query.filter(User.email == email).first()

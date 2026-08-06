@@ -32,7 +32,7 @@ def test_access_token_expired(client):
     
         access_token = response_signup.json["access_token"]
 
-        frozen_time.tick(datetime.timedelta(minutes=5))
+        frozen_time.tick(datetime.timedelta(minutes=15))
 
         response_inf_user = client.get("/inf-user", headers = {"Authorization" : f"Bearer {access_token}"})
 

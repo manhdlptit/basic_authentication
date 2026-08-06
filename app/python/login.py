@@ -11,17 +11,16 @@ login = Blueprint("login", __name__)
 def login_user():
     data = request.get_json()
     
-    email = data.get("email")
-    phone_number = data.get("phone_number")
-    password = data.get("password")
-    
-    if not email.replace(" ","") and not phone_number.replace(" ",""):
+    username = data.get("username", None)
+    password = data.get("password", None)
+
+    if not username or not username.replace(" ",""):
         return jsonify({"Error" : "Not null username"}), 400
-    
-    if not password.replace(" ",""):
+
+    if not password or not password.replace(" ",""):
         return jsonify({"Error" : "Not null password"}), 400
-    
-    check_user = User.query.filter((User.email == email) | (User.phone_number == phone_number)).first()
+
+    check_user = User.query.filter((User.email == username) | (User.phone_number == username)).first()
     if check_user is None:
         return jsonify({"Error" : "Wrong email or phone number or password"}), 400
     

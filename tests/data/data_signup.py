@@ -206,3 +206,55 @@ def signup_with_password_is_8_character():
         "country" : "VN",
         "city" : "VT"
     })
+
+
+def signup_with_fullname_is_whitespace():
+    return ({
+        "full_name" : "    ",
+        "phone_number" : "0397618712",
+        "email" : "manhdl.ptit@gmail.com",
+        "input_password" : "Lwman8_1812",
+        "check_password": "Lwman8_1812",
+        "address" : "19,MP,VT,PT",
+        "country" : "VN",
+        "city" : "VT"
+    })
+
+
+def signup_with_email_is_whitespace():
+    return ({
+        "full_name" : "Le Duc Manh",
+        "phone_number" : "0397618712",
+        "email" : "      ",
+        "input_password" : "Lwman8_1812",
+        "check_password": "Lwman8_1812",
+        "address" : "19,MP,VT,PT",
+        "country" : "VN",
+        "city" : "VT"
+    })
+
+
+def signup_with_phone_number_is_whitespace():
+    return ({
+        "full_name" : "Le Duc Manh",
+        "phone_number" : "      ",
+        "email" : "manhdl.ptit@gmail.com",
+        "input_password" : "Lwman8_1812",
+        "check_password": "Lwman8_1812",
+        "address" : "19,MP,VT,PT",
+        "country" : "VN",
+        "city" : "VT"
+    })
+
+
+def signup_with_input_password_is_whitespace():
+    return ({
+        "full_name" : "Le Duc Manh",
+        "phone_number" : "0397618712",
+        "email" : "manhdl.ptit@gmail.com",
+        "input_password" : "      ",
+        "check_password": "Lwman8_1812",
+        "address" : "19,MP,VT,PT",
+        "country" : "VN",
+        "city" : "VT"
+    })

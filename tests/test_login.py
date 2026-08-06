@@ -3,7 +3,9 @@ from tests.data.data_login import (login_with_email_and_login_valid,
                                    login_with_phoneNumber_is_null,
                                    login_with_phoneNumber_and_password_is_null,
                                    login_with_email_but_wrong_password,
-                                   login_with_email_not_existed_in_DB)
+                                   login_with_email_not_existed_in_DB,
+                                   login_with_username_is_whitespace,
+                                   login_with_password_is_whitespace)
 
 
 def test_login_successfully(client):
@@ -66,3 +68,28 @@ def test_email_not_signup_yet(client):
             
     assert response_login.status_code == 400
     assert response_login.json == {"Error" : "Wrong email or phone number or password"}
+
+
+
+def test_login_with_username_is_whitespace(client):
+    payload_signup = signup_valid()
+    client.post("/signup", json = payload_signup)
+            
+    payload_login = login_with_username_is_whitespace()
+    response_login = client.post("/login", json = payload_login)
+            
+    assert response_login.status_code == 400
+    assert response_login.json == {"Error" : "Not null username"}
+
+
+
+def test_login_with_password_is_whitespace(client):
+    payload_signup = signup_valid()
+    client.post("/signup", json = payload_signup)
+            
+    payload_login = login_with_password_is_whitespace()
+    response_login = client.post("/login", json = payload_login)
+            
+    assert response_login.status_code == 400
+    assert response_login.json == {"Error" : "Not null password"}
+

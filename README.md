@@ -65,11 +65,17 @@ Write new testcase forgot-password, login, signup because completely eliminate t
 
 - ✅ **Sign_up_successful_not_null_any_value** :201
 - ✅ **Sign_up_successful_null_value_not_important** :201
-- ❌ **Test_sign_up_null_email_and_phoneNumber** :400
+- ❌ **Test_sign_up_null_phoneNumber** :400
+- ❌ **Test_sign_up_null_email** :400
+- ❌ **Test_sign_up_null_input_password** :400
 - ❌ **Email existed** :400
 - ❌ **PhoneNumber existed** :400
 - ❌ **Two password not same** :400
 - ❌ **Password is short** :400
+- ❌ **Fullname_is_space_white** :400
+- ❌ **PhoneNumber_is_space_white** :400
+- ❌ **Email_is_space_white** :400
+- ❌ **Input_password_is_space_white** :400
 
 ### 2. Login
 
@@ -78,13 +84,19 @@ Write new testcase forgot-password, login, signup because completely eliminate t
 - ❌ **Null password**:400
 - ❌ **Wrong password**:400
 - ❌ **Login with email not existed**:400
+- ❌ **Login with username is whitespace**:400
+- ❌ **Login with password is whitespace**:400
 
 ### 3. Forgot Password
 
 - ✅ **Inf valid, change password successful**:200
 - ❌ **Inf profile not valid**:400
 - ✅ **Null_value_not_important_successfully**:200
-- ✅ **Access change password api, change password successful**:200
+- ✅ **Access change-password api, change password successful**:200
+- ❌ **Fullname_is_space_white** :400
+- ❌ **PhoneNumber_is_space_white** :400
+- ❌ **Email_is_space_white** :400
+- ❌ **Change_password_is_white_space**:400
 
 ### 4. Logout
 
