@@ -28,8 +28,8 @@ def create_app(config_overrides= None):
         app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(minutes=int(os.getenv("JWT_ACCESS_TOKEN_EXPIRES")))
         app.config['JWT_REFRESH_TOKEN_EXPIRES'] = timedelta(days=int(os.getenv("JWT_REFRESH_TOKEN_EXPIRES")))
 
-    
-    
+
+
     db.init_app(app)
     jwt.init_app(app)
 

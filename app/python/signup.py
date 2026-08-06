@@ -12,14 +12,14 @@ signup = Blueprint("signup", __name__)
 def signup_user():
     data = request.get_json()
 
-    full_name = data.get("full_name", "")  
-    phone_number = data.get("phone_number", "")  
-    email = data.get("email", "")  
-    address = data.get("address", "")  
-    country = data.get("country", "")  
-    city = data.get("city", "")  
-    input_password = data.get("input_password", "")  
-    check_password = data.get("check_password", "")
+    full_name = data.get("full_name", None)  
+    phone_number = data.get("phone_number", None)  
+    email = data.get("email", None)  
+    address = data.get("address", None)  
+    country = data.get("country", None)  
+    city = data.get("city", None)  
+    input_password = data.get("input_password", None)  
+    check_password = data.get("check_password", None)
     
     if not full_name or not full_name.replace(" ",""):
         return jsonify({"Error" : "Missing fullname"}), 400
