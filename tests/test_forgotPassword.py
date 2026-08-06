@@ -1,15 +1,13 @@
 from tests.data.data_signup import signup_valid, sign_up_null_value_not_important
 from tests.data.data_forgotPassword import (inf_user_valid, 
-                                            change_password_valid,
                                             inf_user_null_not_important_value,
                                             inf_user_with_fullname_is_whitespace,
                                             inf_user_with_email_is_whitespace,
                                             inf_user_with_phone_number_is_whitespace,
-                                            change_password_whitespace
+                                            inf_user_null_not_important_value
                                            )
 
-
-def test_inf_valid_change_password_successfully(client):
+def test_inf_valid_to_change_password(client):
     payload_signup = signup_valid()
     client.post("/signup", json = payload_signup)
 
@@ -25,13 +23,6 @@ def test_inf_valid_change_password_successfully(client):
         "access_token" : access_token,
         "refresh_token" : refresh_token
         }
-
-
-    payload_change_password = change_password_valid()
-    response_change_password = client.post("/change-password", json = payload_change_password, headers = {"Authorization" : f"Bearer {access_token}"})
-
-    assert response_change_password.status_code == 200
-    assert response_change_password.json == {"successfully" : "change password successfully"}
 
 
 
@@ -66,21 +57,6 @@ def test_null_value_not_important_successfully(client):
 
 
 
-def test_access_change_password_successfully(client):
-    payload_signup = signup_valid()
-    response_signup = client.post("/signup", json = payload_signup)
-
-    access_token = response_signup.json["access_token"]
-
-    payload_change_password = change_password_valid()
-    response_change_password = client.post("/change-password", json = payload_change_password, headers = {"Authorization" : f"Bearer {access_token}"})
-
-    assert response_change_password.status_code == 200
-    assert response_change_password.json == {
-            "successfully" : "change password successfully"}
-
-
-
 def test_inf_user_with_fullname_is_white_space(client):
     payload_forgot_password = inf_user_with_fullname_is_whitespace()
     response_forgot_password = client.post("/forgot-password", json = payload_forgot_password)
@@ -108,17 +84,7 @@ def test_inf_user_with_phone_number_is_white_space(client):
 
 
 
-def test_change_password_is_white_space(client):
-    payload_signup = signup_valid()
-    response_signup = client.post("/signup", json = payload_signup)
 
-    access_token = response_signup.json["access_token"]
-
-    payload_change_password = change_password_whitespace()
-    response_change_password = client.post("/change-password", json = payload_change_password, headers = {"Authorization" : f"Bearer {access_token}"})
-
-    assert response_change_password.status_code == 400
-    assert response_change_password.json == {"Error" : "Must input new password"}
 
 
 

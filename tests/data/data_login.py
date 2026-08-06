@@ -80,3 +80,32 @@ def login_with_password_is_whitespace():
         "username" : "manhdl.pti@gmail.com",
         "password" : "        "
     }
+
+
+def login_with_password_change_first_time():
+    return {
+        "username" : "manhdl.ptit@gmail.com",
+        "password" : "Manhdl.ptit@2026"
+    }
+
+
+def login_with_password_change_second_time():
+    return {
+        "username" : "manhdl.ptit@gmail.com",
+        "password" : "leducmanh1812"
+    }
+
+
+def login_with_password_change_third_time():
+    return {
+        "username" : "manhdl.ptit@gmail.com",
+        "password" : "kichu18122007"
+    }
+
+
+def login_with_password_change_fourth_time():
+    return {
+        "username" : "manhdl.ptit@gmail.com",
+        "password" : "Lwman8_1812"
+    }
+

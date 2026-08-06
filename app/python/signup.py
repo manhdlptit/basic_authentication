@@ -30,7 +30,7 @@ def signup_user():
     if not email or not email.replace(" ",""):
         return jsonify({"Error" : "Missing email"}), 400
 
-    if not input_password.replace(" ",""):
+    if not input_password or not input_password.replace(" ",""):
         return jsonify({"Error" : "Missing input password"}), 400
     
     find_phone_number = User.query.filter(User.phone_number == phone_number).first()

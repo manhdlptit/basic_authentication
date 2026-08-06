@@ -8,7 +8,11 @@ This project include building code about authentication and the testcase relativ
 
     Use Python version 3.10
 
-### 2. Activate env
+### 2. Install env
+
+    python3 -m venv env
+
+### 3. Activate env
 
 Firstly, open Terminal and run:
 
@@ -21,17 +25,17 @@ Firstly, open Terminal and run:
   .\env\Scripts\activate
   ```
 
-### 3. Install library
+### 4. Install library
 
     pip install -r requirements.txt
 
-### 4. Run testcase
+### 5. Run testcase
 
     pytest -vv
 
 ###
 
-### 5. Run app
+### 6. Run app
 
     python main.py
 
