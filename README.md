@@ -1,12 +1,18 @@
-## Run app & Install
+# Create JWT, protect api with access_token - JWT
 
-### 1. Create env
+This project include building code about authentication and the testcase relative with **Flask**, **Pytest**, **Flask-sqlalchemy** and **Flask-jwt-extended**.
+
+## Coding & Install
+
+### 1. Version python
+
+    Use Python version 3.10
+
+### 2. Install env
 
     python3 -m venv env
 
-###
-
-### 2. Activate env
+### 3. Activate env
 
 Firstly, open Terminal and run:
 
@@ -19,53 +25,100 @@ Firstly, open Terminal and run:
   .\env\Scripts\activate
   ```
 
-### 3. Install library
+### 4. Install library
 
     pip install -r requirements.txt
 
-### 4. Run app
-
-    python main.py
-
-###
-
-### 5. Run test
+### 5. Run testcase
 
     pytest -vv
 
 ###
 
+### 6. Run app
+
+    python main.py
+
+###
+
+## Several config and describe about project
+
+### 1. JWT
+
+- Secret_key for both jwt and secret_key serve are used with **"SECRET_KEY"** in file **.env**
+- Access token expire per 5 minutes
+- Refresh token is created to create new access token
+- Refresh token expire per 30 days
+
+### 2. Feature change_password
+
+- User **POST** method for save history password in DB, not use **PUT**
+
+### 3. About project
+
+- Config in file **init.py**, data about secret_key, uri_db, expired token of access token and expired token of refresh token save in file **.env**
+- Every api important are protected with access_token(JWT)
+- Completely eliminate the type **Auth: Token 'uuid'**
+- Add many data for testcase in the future, several data not use in this project
+
 ## Summary the Test Cases
 
-Write about testcase forgot-password, login, signup
+Write new testcase forgot-password, login, signup because completely eliminate the type **"Auth: Token 'uuid'"**, add testcase about test_protect_api(create, protect, revoke), test_case_refresh_token(create new token), test_case_logout
 
 ### 1. Signup
 
-- ✅ **Sign_up_successful** :201
-- ❌ **Sign_up_null_username** :400
+- ✅ **Sign_up_successful_not_null_any_value** :201
+- ✅ **Sign_up_successful_null_value_not_important** :201
+- ❌ **Test_sign_up_null_phoneNumber** :400
+- ❌ **Test_sign_up_null_email** :400
+- ❌ **Test_sign_up_null_input_password** :400
 - ❌ **Email existed** :400
 - ❌ **PhoneNumber existed** :400
-- ❌ **Password not the same** :400
+- ❌ **Two password not same** :400
 - ❌ **Password is short** :400
-- ✅ **Password is 8 character** :201
+- ❌ **Fullname_is_space_white** :400
+- ❌ **PhoneNumber_is_space_white** :400
+- ❌ **Email_is_space_white** :400
+- ❌ **Input_password_is_space_white** :400
 
 ### 2. Login
 
 - ✅ **Login successful**:200
-- ❌ **Wrong password**:400
-- ❌ **Not token in header**:401
-- ❌ **Login with username not existed**:400
 - ❌ **Login with phoneNumber is None**:400
 - ❌ **Null password**:400
-- ❌ **Wrong format token**:401
-- ❌ **Wrong token**:401
+- ❌ **Wrong password**:400
+- ❌ **Login with email not existed**:400
+- ❌ **Login with username is whitespace**:400
+- ❌ **Login with password is whitespace**:400
 
 ### 3. Forgot Password
 
-- ✅ **Change password successful**:200
-- ❌ **Inf profile invalid**:400
-- ✅ **Login with default password successful**:200
-- ❌ **Not url forgot password**:403
-- ❌ **Username not signup**:400
-- ❌ **Not token in header**:401
-- ❌ **Token invalid**:401
+- ✅ **Inf valid, change password successful**:200
+- ❌ **Inf profile not valid**:400
+- ✅ **Null_value_not_important_successfully**:200
+- ✅ **Access change-password api, change password successful**:200
+- ❌ **Fullname_is_space_white** :400
+- ❌ **PhoneNumber_is_space_white** :400
+- ❌ **Email_is_space_white** :400
+- ❌ **Change_password_is_white_space**:400
+
+### 4. Logout
+
+- ✅ **Logout successful**:200
+
+### 5. Protect api
+
+- ✅ **Having access token, access protect api**:200
+- ❌ **Access_token expired**:401
+- ❌ **Access_token revoked**:401
+- ❌ **Access_token not in headers**:401
+- ❌ **Access_token invalid, signature edited**:401
+
+### 6. Refresh_token
+
+- ✅ **Refresh_token_headers**:201
+- ❌ **Access_token headers**:401
+
+---
+
+_return `jsonify` service for Frontend._

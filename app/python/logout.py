@@ -1,0 +1,24 @@
+from flask import Blueprint, jsonify
+from flask_jwt_extended import get_jwt, jwt_required
+
+from app.model.model import db, BlockList
+
+logout = Blueprint("logout", __name__)
+
+@logout.route("/logout", methods = ["POST"])
+@jwt_required(verify_type=False)
+def logout_user():
+    payload = get_jwt()
+
+    jti = payload["jti"]
+    type_jwt = payload["type"]
+
+    new_block_list = BlockList(jti=jti)
+
+    db.session.add(new_block_list)
+    db.session.commit()
+
+    if type_jwt == "access":
+        return jsonify({"successfully" :"access token has revoked"}), 200
+    if type_jwt == "refresh" :
+        return jsonify({"successfully" : "revoked refresh token"}), 200

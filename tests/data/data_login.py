@@ -1,45 +1,82 @@
-def login_valid():
-    return({
-        "phone_number" : "0397618712",
-        "email" : "manhdl.ptit@gmail.com",
-        "input_password" : "Lwman8_1812"
-    })
+def login_with_email_and_login_valid():
+    return {
+        "username" : "manhdl.ptit@gmail.com",
+        "password" : "Lwman8_1812"
+    }
 
-def login_wrong_password():
-    return({
-        "phone_number" : "0397618712",
-        "email" : "manhdl.ptit@gmail.com",
-        "input_password" : "Lwman8_181"
-    })
 
-def login_not_found_user():
-    return({
-        "phone_number" : "039761871",
-        "email" : "manhdl.tit@gmail.com",
-        "input_password" : "Lwman8_1812"
-    })
+def login_with_phoneNumber_and_login_valid():
+    return {
+        "username" : "0397618712",
+        "password" : "Lwman8_1812"
+    }
 
-def login_not_input_username():
-    return({
-        "input_password" : "Lwman8_1812"
-    })
 
-def login_not_input_password():
-    return({
-        "phone_number" : "039761871",
-        "email" : "manhdl.tit@gmail.com"
-    })
+def login_with_phoneNumber_but_wrong_password():
+    return {
+        "username" : "0397618712",
+        "password" : "Lwman8_181"
+    }
 
-def login_valid_new_password_default():
-    return({
-        "phone_number" : "0397618712",
-        "email" : "manhdl.ptit@gmail.com",
-        "input_password" : "123456789"
-    })
 
-def login_valid_new_password_user_choose():
-    return({
-        "phone_number" : "0397618712",
-        "email" : "manhdl.ptit@gmail.com",
-        "input_password" : "12345678910"
-    })
+def login_with_email_but_wrong_password():
+    return {
+        "username" : "manhdl.ptit@gmail.com",
+        "password" : "Lwman8_181"
+    }
+
+
+def login_with_email_is_null():
+    return {
+        "email" : None,
+        "password" : "Lwman8_181"
+    }
+
+
+def login_with_phoneNumber_is_null():
+    return {
+        "username" : None,
+        "password" : "Lwman8_181"
+    }
+
+
+def login_with_email_and_password_is_null():
+    return {
+        "username" : "manhdl.ptit@gmail.com",
+        "password" : None
+    }
+
+
+def login_with_phoneNumber_and_password_is_null():
+    return {
+        "username" : "0397618712",
+        "password" : None
+    }
+
+
+def login_with_phoneNumber_not_existed_in_DB():
+    return {
+        "username" : "039761871",
+        "password" : "Lwman8_1812"
+    }
+
+
+def login_with_email_not_existed_in_DB():
+    return {
+        "username" : "manhdl.pti@gmail.com",
+        "password" : "Lwman8_1812"
+    }
+
+
+def login_with_username_is_whitespace():
+    return {
+        "username" : "        ",
+        "password" : "Lwman8_1812"
+    }
+
+
+def login_with_password_is_whitespace():
+    return {
+        "username" : "manhdl.pti@gmail.com",
+        "password" : "        "
+    }

@@ -1,156 +1,125 @@
-from tests.data.data_signup import signup_valid
-from tests.data.data_login import (login_valid_new_password_user_choose, 
-                                   login_valid_new_password_default
-                                   )
-from tests.data.data_forgotPassword import (forgotPassword_valid, 
-                                            forgotPassword_wrong_inf,
-                                            password_user_choose,
-                                            forgotPassword_valid2
-                                            )
+from tests.data.data_signup import signup_valid, sign_up_null_value_not_important
+from tests.data.data_forgotPassword import (inf_user_valid, 
+                                            change_password_valid,
+                                            inf_user_null_not_important_value,
+                                            inf_user_with_fullname_is_whitespace,
+                                            inf_user_with_email_is_whitespace,
+                                            inf_user_with_phone_number_is_whitespace,
+                                            change_password_whitespace
+                                           )
 
 
-
-def test_change_successfully(client):
+def test_inf_valid_change_password_successfully(client):
     payload_signup = signup_valid()
-    response_signup = client.post("/signup", json=payload_signup)
-    data_signup = response_signup.get_json()
-    token_before_change_password = data_signup.get("token")
+    client.post("/signup", json = payload_signup)
 
-    
-    payload_forgot_password = forgotPassword_valid()
-    response_forgot_password = client.post("/forgot-password", json=payload_forgot_password, headers = {"Auth": f"Token {token_before_change_password}"})
-    data_forgot_password = response_forgot_password.get_json()
-    token_after_change_password = data_forgot_password.get("your_token")
+    payload_inf_user = inf_user_valid()
+    response_inf_user = client.post("/forgot-password", json = payload_inf_user)
 
-    assert response_forgot_password.status_code == 200
-    assert response_forgot_password.json == {
-        "successfully" : "go to \"/new-password\" ",
-        "your_token" : token_after_change_password
+    access_token = response_inf_user.json["access_token"]
+    refresh_token = response_inf_user.json["refresh_token"]
+
+    assert response_inf_user.status_code == 200
+    assert response_inf_user.json == {
+        "successfully" : "go to \"/change-password\"",
+        "access_token" : access_token,
+        "refresh_token" : refresh_token
         }
 
-    
-    payload_new_password = password_user_choose()
-    response_new_password = client.put("/new-password", json=payload_new_password, headers = {"Auth": f"Token {token_after_change_password}"})
-    
-    assert response_new_password.status_code == 200
-    assert response_new_password.json == {"successfully" : "change password successfully"}
 
-    
-    payload_login = login_valid_new_password_user_choose()
-    response_login = client.post("/login", json=payload_login, headers = {"Auth": f"Token {token_after_change_password}"})
+    payload_change_password = change_password_valid()
+    response_change_password = client.post("/change-password", json = payload_change_password, headers = {"Authorization" : f"Bearer {access_token}"})
 
-    assert response_login.status_code == 200
-    assert response_login.json == {"successfully" : "login successfully"}
+    assert response_change_password.status_code == 200
+    assert response_change_password.json == {"successfully" : "change password successfully"}
 
 
 
-def test_forgotPassword_wrong_inf(client):
+def test_inf_not_same(client):
     payload_signup = signup_valid()
-    response_signup = client.post("/signup", json=payload_signup)
-    data_signup = response_signup.get_json()
-    token_before_change_password = data_signup.get("token")
+    client.post("/signup", json = payload_signup)
 
-    
-    payload_forgot_password = forgotPassword_wrong_inf()
-    response_forgot_password = client.post("/forgot-password", json=payload_forgot_password, headers = {"Auth": f"Token {token_before_change_password}"})
-    data_forgot_password = response_forgot_password.get_json()
+    payload_inf_user = inf_user_null_not_important_value()
+    response_inf_user = client.post("/forgot-password", json = payload_inf_user)
 
-    assert response_forgot_password.status_code == 400
-    assert response_forgot_password.json == {"error" : "information is not the same"}
-
-    
-    payload_new_password = password_user_choose()
-    response_new_password = client.put("/new-password", json=payload_new_password, headers = {"Auth": f"Token {token_before_change_password}"})
-    
-    assert response_new_password.status_code == 403
-    assert response_new_password.json == {"error" : "Forbidden! You must successful in \"/forgot-password\""}
+    assert response_inf_user.status_code == 400
+    assert response_inf_user.json == {"error" : "information is not the same"}
 
 
 
-def test_login_with_password_default(client):
-    payload_signup = signup_valid()
-    response_signup = client.post("/signup", json=payload_signup)
-    data_signup = response_signup.get_json()
-    token_before_change_password = data_signup.get("token")
+def test_null_value_not_important_successfully(client):
+    payload_signup = sign_up_null_value_not_important()
+    client.post("/signup", json = payload_signup)
 
-    
-    payload_forgot_password = forgotPassword_valid()
-    response_forgot_password = client.post("/forgot-password", json=payload_forgot_password, headers = {"Auth": f"Token {token_before_change_password}"})
-    data_forgot_password = response_forgot_password.get_json()
-    token_after_change_password = data_forgot_password.get("your_token")
+    payload_inf_user = inf_user_null_not_important_value()
+    response_inf_user = client.post("/forgot-password", json = payload_inf_user)
 
-    assert response_forgot_password.status_code == 200
-    assert response_forgot_password.json == {
-        "successfully" : "go to \"/new-password\" ",
-        "your_token" : token_after_change_password
+    access_token = response_inf_user.json["access_token"]
+    refresh_token = response_inf_user.json["refresh_token"]
+
+    assert response_inf_user.status_code == 200
+    assert response_inf_user.json == {
+        "successfully" : "go to \"/change-password\"",
+        "access_token" : access_token,
+        "refresh_token" : refresh_token
         }
 
-   
-    payload_new_password = ({
-
-    })
-    response_new_password = client.put("/new-password", json=payload_new_password, headers = {"Auth": f"Token {token_after_change_password}"})
-
-    
-    assert response_new_password.status_code == 200
-    assert response_new_password.json == {"successfully" : "password default is \"123456789\""}
-    
-    
-    payload_login = login_valid_new_password_default()
-    response_login = client.post("/login", json=payload_login, headers = {"Auth": f"Token {token_after_change_password}"})
-
-    assert response_login.status_code == 200
-    assert response_login.json == {"successfully" : "login successfully"}
 
 
-
-def test_with_no_url_forgotPass(client):
+def test_access_change_password_successfully(client):
     payload_signup = signup_valid()
-    response_signup = client.post("/signup", json=payload_signup)
-    data_signup = response_signup.get_json()
-    token_before_change_password = data_signup.get("token")
-    
-    
-    payload_new_password = password_user_choose()
-    response_new_password = client.put("/new-password", json=payload_new_password, headers = {"Auth": f"Token {token_before_change_password}"})
-    
-    assert response_new_password.status_code == 403
-    assert response_new_password.json == {"error" : "Forbidden! You must successful in \"/forgot-password\""}
+    response_signup = client.post("/signup", json = payload_signup)
+
+    access_token = response_signup.json["access_token"]
+
+    payload_change_password = change_password_valid()
+    response_change_password = client.post("/change-password", json = payload_change_password, headers = {"Authorization" : f"Bearer {access_token}"})
+
+    assert response_change_password.status_code == 200
+    assert response_change_password.json == {
+            "successfully" : "change password successfully"}
 
 
-def test_username_not_signup(client):
-    payload_signup = signup_valid()
-    response_signup = client.post("/signup", json=payload_signup)
-    data_signup = response_signup.get_json()
-    token_before_change_password = data_signup.get("token")
 
-    
-    payload_forgot_password = forgotPassword_valid2()
-    response_forgot_password = client.post("/forgot-password", json=payload_forgot_password, headers = {"Auth": f"Token {token_before_change_password}"})
-    data_forgot_password = response_forgot_password.get_json()
-    token_after_change_password = data_forgot_password.get("your_token")
+def test_inf_user_with_fullname_is_white_space(client):
+    payload_forgot_password = inf_user_with_fullname_is_whitespace()
+    response_forgot_password = client.post("/forgot-password", json = payload_forgot_password)
 
     assert response_forgot_password.status_code == 400
-    assert response_forgot_password.json == {"error" : "user not sign up yet"}
-
-
-def test_no_header_auth(client):
-    payload_forgot_password = forgotPassword_valid()
-    response_new_password = client.post("/forgot-password", json=payload_forgot_password)
-        
-    assert response_new_password.status_code == 401
-    assert response_new_password.json == {'error': 'not authentic'}
+    assert response_forgot_password.json == {"Error" : "Missing fullname"}
 
 
 
-def test_token_invalid(client):
+def test_inf_user_with_email_is_white_space(client):
+    payload_forgot_password = inf_user_with_email_is_whitespace()
+    response_forgot_password = client.post("/forgot-password", json = payload_forgot_password)
+
+    assert response_forgot_password.status_code == 400
+    assert response_forgot_password.json == {"Error" : "Missing email"}
+
+
+
+def test_inf_user_with_phone_number_is_white_space(client):
+    payload_forgot_password = inf_user_with_phone_number_is_whitespace()
+    response_forgot_password = client.post("/forgot-password", json = payload_forgot_password)
+
+    assert response_forgot_password.status_code == 400
+    assert response_forgot_password.json == {"Error" : "Missing phone number"}
+
+
+
+def test_change_password_is_white_space(client):
     payload_signup = signup_valid()
-    response_signup = client.post("/signup", json=payload_signup)
-    data_signup = response_signup.get_json()
-    token_before_change_password = data_signup.get("token")
+    response_signup = client.post("/signup", json = payload_signup)
 
-    payload_forgot_password = forgotPassword_valid()
-    response_new_password = client.post("/forgot-password", json=payload_forgot_password, headers = {"Auth": f"Token {token_before_change_password}sd"})
-            
-    assert response_new_password.status_code == 401
-    assert response_new_password.json == {'error': 'not authentic'}
+    access_token = response_signup.json["access_token"]
+
+    payload_change_password = change_password_whitespace()
+    response_change_password = client.post("/change-password", json = payload_change_password, headers = {"Authorization" : f"Bearer {access_token}"})
+
+    assert response_change_password.status_code == 400
+    assert response_change_password.json == {"Error" : "Must input new password"}
+
+
+
+

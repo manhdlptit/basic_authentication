@@ -1,127 +1,95 @@
 from tests.data.data_signup import signup_valid
-from tests.data.data_login import (login_valid, 
-                                   login_wrong_password,
-                                   login_not_found_user,
-                                   login_not_input_username,
-                                   login_not_input_password
-                                   )
+from tests.data.data_login import (login_with_email_and_login_valid,
+                                   login_with_phoneNumber_is_null,
+                                   login_with_phoneNumber_and_password_is_null,
+                                   login_with_email_but_wrong_password,
+                                   login_with_email_not_existed_in_DB,
+                                   login_with_username_is_whitespace,
+                                   login_with_password_is_whitespace)
+
 
 def test_login_successfully(client):
     payload_signup = signup_valid()
-    response_signup = client.post("/signup", json=payload_signup)
-    
-    data_signup = response_signup.get_json()
-    token = data_signup.get("token")
+    client.post("/signup", json = payload_signup)
 
-    payload_login = login_valid()
-    response_login = client.post("/login", json=payload_login, headers = {"Auth": f"Token {token}"})
+    payload_login = login_with_email_and_login_valid()
+    response_login = client.post("/login", json = payload_login)
+
+    access_token = response_login.json["access_token"]
+    refresh_token = response_login.json["refresh_token"]
 
     assert response_login.status_code == 200
-    assert response_login.json == {"successfully" : "login successfully"}
+    assert response_login.json == {"access_token" : access_token, "refresh_token" : refresh_token}
 
 
 
-def test_login_wrong_password(client):
+def test_phoneNumber_is_None(client):
     payload_signup = signup_valid()
-
-    response_signup = client.post("/signup", json=payload_signup)
-
-    data_signup = response_signup.get_json()
-    token = data_signup.get("token")
-
-    payload_login = login_wrong_password()
-
-    response_login = client.post("/login", json= payload_login, headers = {"Auth": f"Token {token}"})
-
-    assert response_login.status_code == 400
-    assert response_login.json == {"error" : "wrong email/phone or password"}
-
-
-
-def test_login_with_not_token(client):
-    payload_signup = signup_valid()
-
-    client.post("/signup", json=payload_signup)
+    client.post("/signup", json = payload_signup)
     
-    payload_login = login_valid()
-
-    response_login = client.post("/login", json=payload_login)
-
-    assert response_login.status_code == 401
-    assert response_login.json == {"error" : "not authentic"}
-
-
-
-def test_login_username_not_existed(client):
-    payload_signup = signup_valid()
-    response_signup = client.post("/signup", json=payload_signup)
-
-    data_signup = response_signup.get_json()
-    token = data_signup.get("token")
-
-    payload_login = login_not_found_user()
-    response_login = client.post("/login", json= payload_login, headers = {"Auth": f"Token {token}"})
-
+    payload_login = login_with_phoneNumber_is_null()
+    response_login = client.post("/login", json = payload_login)
+    
     assert response_login.status_code == 400
-    assert response_login.json == {"error" : "wrong email/phone or password"}
+    assert response_login.json == {"Error" : "Not null username"}
 
 
 
-def test_login_null_username(client):
+def test_password_is_None(client):
     payload_signup = signup_valid()
-    response_signup = client.post("/signup", json=payload_signup)
-
-    data_signup = response_signup.get_json()
-    token = data_signup.get("token")
-
-    payload_login = login_not_input_username()
-
-    response_login = client.post("/login", json= payload_login, headers = {"Auth": f"Token {token}"})
-
+    client.post("/signup", json = payload_signup)
+        
+    payload_login = login_with_phoneNumber_and_password_is_null()
+    response_login = client.post("/login", json = payload_login)
+        
     assert response_login.status_code == 400
-    assert response_login.json == {'error': 'must input phone_number or email'}
+    assert response_login.json == {"Error" : "Not null password"}
 
 
 
-def test_login_null_password(client):
+def test_wrong_password(client):
     payload_signup = signup_valid()
-    response_signup = client.post("/signup", json=payload_signup)
-
-    data_signup = response_signup.get_json()
-    token = data_signup.get("token")
-
-    payload_login = login_not_input_password()
-    response_login = client.post("/login", json= payload_login, headers = {"Auth": f"Token {token}"})
-
+    client.post("/signup", json = payload_signup)
+            
+    payload_login = login_with_email_but_wrong_password()
+    response_login = client.post("/login", json = payload_login)
+            
     assert response_login.status_code == 400
-    assert response_login.json == {'error': 'must input password'}
+    assert response_login.json == {"Error" : "Wrong email or phone number or password"}
 
 
 
-def test_login_wrong_format_token(client):
+def test_email_not_signup_yet(client):
     payload_signup = signup_valid()
-    response_signup = client.post("/signup", json=payload_signup)
-
-    data_signup = response_signup.get_json()
-    token = data_signup.get("token")
-
-    payload_login = login_valid()
-    response_login = client.post("/login", json= payload_login, headers = {"Authentication": f"Baber {token}"})
-
-    assert response_login.status_code == 401
-    assert response_login.json == {'error': 'not authentic'}
+    client.post("/signup", json = payload_signup)
+            
+    payload_login = login_with_email_not_existed_in_DB()
+    response_login = client.post("/login", json = payload_login)
+            
+    assert response_login.status_code == 400
+    assert response_login.json == {"Error" : "Wrong email or phone number or password"}
 
 
 
-def test_login_token_wrong(client):
+def test_login_with_username_is_whitespace(client):
     payload_signup = signup_valid()
-    response_signup = client.post("/signup", json=payload_signup)
+    client.post("/signup", json = payload_signup)
+            
+    payload_login = login_with_username_is_whitespace()
+    response_login = client.post("/login", json = payload_login)
+            
+    assert response_login.status_code == 400
+    assert response_login.json == {"Error" : "Not null username"}
 
-    data_signup = response_signup.get_json()
-    token = data_signup.get("token")
 
-    payload_login = login_valid()
-    response_login = client.post("/login", json= payload_login, headers = {"Auth": f"Token {token}k"})
 
-    assert response_login.status_code == 401
-    assert response_login.json == {'error': 'not authentic'}
+def test_login_with_password_is_whitespace(client):
+    payload_signup = signup_valid()
+    client.post("/signup", json = payload_signup)
+            
+    payload_login = login_with_password_is_whitespace()
+    response_login = client.post("/login", json = payload_login)
+            
+    assert response_login.status_code == 400
+    assert response_login.json == {"Error" : "Not null password"}
+
