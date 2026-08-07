@@ -12,7 +12,7 @@ from tests.data.data_signup import (signup_valid,
                                     signup_with_input_password_is_whitespace,
                                     )
 
-from flask_jwt_extended import decode_token
+from flask_jwt_extended import decode_token, current_user
 
 def test_not_null_value_successful(client):
     payload = signup_valid()
@@ -21,16 +21,15 @@ def test_not_null_value_successful(client):
     access_token = response.json["access_token"]
     refresh_token = response.json["refresh_token"]
 
-    claim_inf_token = decode_token(access_token)
-
-    id_user = (decode_token(access_token))["sub"]
-    exp = (decode_token(access_token))["exp"]
-
-    assert id_user == claim_inf_token["sub"]
-    assert exp == claim_inf_token["exp"]
-
     assert response.status_code == 201
     assert response.json == {"access_token" : access_token, "refresh_token" : refresh_token}
+
+    client.get("/inf-user", headers = {"Authorization" : f"Bearer {access_token}"})
+
+    claim_inf_token = decode_token(access_token)
+    
+    assert claim_inf_token["sub"] == str(current_user.id)
+    assert "exp" in claim_inf_token
 
 
 

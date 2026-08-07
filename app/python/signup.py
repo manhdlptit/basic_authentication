@@ -21,16 +21,16 @@ def signup_user():
     input_password = data.get("input_password", None)  
     check_password = data.get("check_password", None)
     
-    if not full_name or not full_name.replace(" ",""):
+    if not full_name or not (full_name.replace(" ","")).strip():
         return jsonify({"Error" : "Missing fullname"}), 400
     
-    if not phone_number or not phone_number.replace(" ",""):
+    if not phone_number or not (phone_number.replace(" ","")).strip():
         return jsonify({"Error" : "Missing phone number"}), 400
     
-    if not email or not email.replace(" ",""):
+    if not email or not (email.replace(" ","")).strip():
         return jsonify({"Error" : "Missing email"}), 400
 
-    if not input_password or not input_password.replace(" ",""):
+    if not input_password or not (input_password.replace(" ","")).strip():
         return jsonify({"Error" : "Missing input password"}), 400
     
     find_phone_number = User.query.filter(User.phone_number == phone_number).first()
