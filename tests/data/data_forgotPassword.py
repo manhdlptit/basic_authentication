@@ -1,3 +1,15 @@
+def change_password_valid():
+    return {
+        "new_password" : "Manhdl.ptit@2026"
+        }
+
+
+def change_password_whitespace():
+    return {
+        "new_password" : "       "
+        }
+
+
 def inf_user_valid():
     return {
         "full_name" : "Le Duc Manh",

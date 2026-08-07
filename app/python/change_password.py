@@ -12,37 +12,37 @@ change_password = Blueprint("change_password", __name__)
 @jwt_required()
 def change_password_when_logged_in():
     new_password = request.json.get("new_password")
-
+    
     id = get_jwt_identity()
-                
+    
     find_user = User.query.filter(User.id == int(id)).first()
 
     if not new_password or not new_password.replace(" ",""):
         return jsonify({"Error" : "Must input new password"}), 400
 
-    password_refresh = (str(new_password).lower()).replace(" ", "")
+    password_refresh = ((str(new_password).lower()).replace(" ", "")).strip()
     
-    create_fullName_refresh = (str(find_user.full_name).lower()).replace(" ", "")
+    create_fullName_refresh = ((str(find_user.full_name).lower()).replace(" ", "")).strip()
     if password_refresh == create_fullName_refresh:
         return jsonify({"Error" : "Password not match profile data"}), 400
-        
-    create_email_refresh = (str(find_user.email).lower()).replace(" ", "")
+    
+    create_email_refresh = ((str(find_user.email).lower()).replace(" ", "")).strip()
     if password_refresh == create_email_refresh:
         return jsonify({"Error" : "Password not match profile data"}), 400
         
-    create_phoneNumber_refresh = (str(find_user.phone_number).lower()).replace(" ", "")
+    create_phoneNumber_refresh = ((str(find_user.phone_number).lower()).replace(" ", "")).strip()
     if password_refresh == create_phoneNumber_refresh:
         return jsonify({"Error" : "Password not match profile data"}), 400
         
-    create_address_refresh = (str(find_user.address).lower()).replace(" ", "")
+    create_address_refresh = ((str(find_user.address).lower()).replace(" ", "").strip())
     if password_refresh == create_address_refresh:
         return jsonify({"Error" : "Password not match profile data"}), 400
     
-    create_city_refresh = (str(find_user.city).lower()).replace(" ", "")
+    create_city_refresh = ((str(find_user.city).lower()).replace(" ", "")).strip()
     if password_refresh == create_city_refresh:
         return jsonify({"Error" : "Password not match profile data"}), 400
     
-    create_country_refresh = (str(find_user.country).lower()).replace(" ", "")
+    create_country_refresh = ((str(find_user.country).lower()).replace(" ", "")).strip()
     if password_refresh == create_country_refresh:
         return jsonify({"Error" : "Password not match profile data"}), 400
     

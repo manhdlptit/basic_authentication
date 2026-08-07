@@ -63,7 +63,7 @@ Firstly, open Terminal and run:
 
 ## Summary the Test Cases
 
-Write new testcase forgot-password, login, signup because completely eliminate the type **"Auth: Token 'uuid'"**, add testcase about test_protect_api(create, protect, revoke), test_case_refresh_token(create new token), test_case_logout
+Write new testcase forgot-password, login, signup because completely eliminate the type **"Auth: Token 'uuid'"**, add testcase about test_protect_api(create, protect, revoke), test_case_refresh_token(create new token), test_case_logout, test_case_change-password
 
 ### 1. Signup
 
@@ -96,7 +96,6 @@ Write new testcase forgot-password, login, signup because completely eliminate t
 - ✅ **Inf valid, change password successful**:200
 - ❌ **Inf profile not valid**:400
 - ✅ **Null_value_not_important_successfully**:200
-- ✅ **Access change-password api, change password successful**:200
 - ❌ **Fullname_is_space_white** :400
 - ❌ **PhoneNumber_is_space_white** :400
 - ❌ **Email_is_space_white** :400
@@ -118,6 +117,16 @@ Write new testcase forgot-password, login, signup because completely eliminate t
 
 - ✅ **Refresh_token_headers**:201
 - ❌ **Access_token headers**:401
+
+### 7. Change password
+
+- ✅ **Change password first time successfully**:200
+- ✅ **Change password second time successfully**:200
+- ✅ **Change password third time successfully**:200
+- ✅ **Password fourth time same password signup successfully**:200
+- ❌ **New password match 3 last time**:400
+- ❌ **New password like profile user**:400
+- ❌ **New password is whitespace**:400
 
 ---
 
