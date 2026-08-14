@@ -10,7 +10,7 @@ signup = Blueprint("signup", __name__)
 
 @signup.route("/signup", methods = ["POST"])
 def signup_user():
-    data = request.get_json()
+    data = request.get_json(silent= True)
 
     full_name = data.get("full_name", None)  
     phone_number = data.get("phone_number", None)  
@@ -18,6 +18,7 @@ def signup_user():
     address = data.get("address", None)  
     country = data.get("country", None)  
     city = data.get("city", None)  
+    birthday = data.get("birthday", None)  
     input_password = data.get("input_password", None)  
     check_password = data.get("check_password", None)
     
@@ -56,7 +57,8 @@ def signup_user():
                     address=address,
                     country=country,
                     city=city,
-                    password=password
+                    password=password,
+                    birthday=birthday
                     )
     db.session.add(new_user)
     db.session.flush()

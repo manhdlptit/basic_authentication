@@ -1,14 +1,18 @@
 from flask import Blueprint, jsonify, request
 from flask_jwt_extended import create_access_token, create_refresh_token
+from werkzeug.security import generate_password_hash
 
-from app.model.model import User
+from app.model.model import User,db
+
+import uuid
+
 
 forgot_password = Blueprint("forgot_password", __name__)
 
 
 @forgot_password.route("/forgot-password", methods = ["POST"])
 def forgot_password_user():
-    data = request.get_json()
+    data = request.get_json(silent=True)
     phone_number = data.get("phone_number")
     email = data.get("email")
     address = data.get("address")
@@ -27,16 +31,25 @@ def forgot_password_user():
 
     find_user = User.query.filter((User.email == email) | (User.phone_number == phone_number)).first()
     if not find_user:
-        return jsonify({"error" : "information is not the same"}), 400
+        return jsonify({"Error" : "information is not the same"}), 400
     if not (find_user.address == address and find_user.country == country and find_user.city == city and find_user.full_name == full_name):
-        return jsonify({"error" : "information is not the same"}), 400
+        return jsonify({"Error" : "information is not the same"}), 400
 
     access_token = create_access_token(identity=find_user)
     refresh_token = create_refresh_token(identity=find_user) 
+
+    
+    temporary_password = uuid.uuid4().hex
+
+    find_user.password = generate_password_hash(temporary_password)
+
+    db.session.commit()
 
 
     return jsonify({
         "successfully" : "go to \"/change-password\"",
         "access_token" : access_token,
-        "refresh_token" : refresh_token
+        "refresh_token" : refresh_token,
+        "temporary_password" : temporary_password,
+        "Notice" : "Change your password immediately!"
         }), 200
