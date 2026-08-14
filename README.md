@@ -99,7 +99,6 @@ Write new testcase forgot-password, login, signup because completely eliminate t
 - ❌ **Fullname_is_space_white** :400
 - ❌ **PhoneNumber_is_space_white** :400
 - ❌ **Email_is_space_white** :400
-- ❌ **Change_password_is_white_space**:400
 
 ### 4. Logout
 
@@ -120,13 +119,87 @@ Write new testcase forgot-password, login, signup because completely eliminate t
 
 ### 7. Change password
 
+- ❌ **Not token in headers**:401
+- ❌ **Wrong current password**:400
 - ✅ **Change password first time successfully**:200
 - ✅ **Change password second time successfully**:200
 - ✅ **Change password third time successfully**:200
 - ✅ **Password fourth time same password signup successfully**:200
 - ❌ **New password match 3 last time**:400
-- ❌ **New password like profile user**:400
+- ❌ **New password like fullname user**:400
+- ❌ **New password like email user**:400
+- ❌ **New password like phoneNumber user**:400
 - ❌ **New password is whitespace**:400
+- ✅ **Password user1 same password user2, user2 change password successfully**:200
+
+## Call API Change-password - [DT-03]
+
+To call API change password, I use "POSTMAN".
+
+### 1.Create data signup, and call signup API to take access_token
+
+#### 1. Call signup API
+
+`http://127.0.0.1:9999/signup ` , method : "POST"
+
+#### 2.Add data in body, type row -> json
+
+Example data
+
+```
+{
+    "full_name" : "Le Duc Manh",
+    "phone_number" : "0397618712",
+    "email" : "manhdl.ptit@gmail.com",
+    "input_password" : "Lwman8_1812",
+    "check_password": "Lwman8_1812",
+    "address" : "19,MP,VT,PT",
+    "country" : "VN",
+    "city" : "VT"
+}
+```
+
+#### 3. Take access token
+
+Press "Send"
+
+Get `value` of `dictionary`, with `key` is "access_token"
+
+Example output
+
+```
+{
+  "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc4NjYzNDcxMCwianRpIjoiYmU0MTM0NWItZWZlMS00Yjg4LWI2YjgtNjNhZDA3NThiYThkIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6IjEiLCJuYmYiOjE3ODY2MzQ3MTAsImNzcmYiOiI1ZDY2ZWU4OS1lYjFiLTQ5YWEtOWU2ZC1mOTlkZGMxMTc4MDciLCJleHAiOjE3ODY2MzUwMTB9.0njq_DKtzXVJmSoUfGiGqld-7VzVJZXyujYqaYeaL4E",
+  "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTc4NjYzNDcxMCwianRpIjoiZjQ3MGNmMDUtZTNlOS00MjMzLTlkNTQtYzVhZDJlZmIyZmQ3IiwidHlwZSI6InJlZnJlc2giLCJzdWIiOiIxIiwibmJmIjoxNzg2NjM0NzEwLCJjc3JmIjoiMTk1OTFkZjItYzE3Ny00MGFiLWIzY2EtYjRhMmFkZThkZjlkIiwiZXhwIjoxNzg5MjI2NzEwfQ.QCDiPpITGnFZXSs4yZudC0amq5BlQkXVNCjOLXw9Ctg"
+}
+```
+
+### 2.Call change password API and change password
+
+#### 1. Call change password API
+
+`http://127.0.0.1:9999/change-password` , method : "POST"
+
+#### 2.Add access token in headers
+
+Go to "Authorization", choose "Bearer Token"
+
+Paste "access_token" got in token input
+
+#### 3.Add data in body, type row -> json, and send data to server
+
+Example data change password
+
+```
+{
+    "current_password" : "Lwman8_1812",
+    "new_password" : "Manhdl.ptit@2026"
+}
+```
+
+Press "Send"
+
+#### 4. Get information Successfully or Error
 
 ---
 

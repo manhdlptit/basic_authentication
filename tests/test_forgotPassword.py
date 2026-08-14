@@ -18,20 +18,26 @@ def test_inf_valid_to_change_password(client):
 
     access_token = response_inf_user.json["access_token"]
     refresh_token = response_inf_user.json["refresh_token"]
-
+    temporary_password = response_inf_user.json["temporary_password"]
+ 
     assert response_inf_user.status_code == 200
     assert response_inf_user.json == {
         "successfully" : "go to \"/change-password\"",
         "access_token" : access_token,
-        "refresh_token" : refresh_token
+        "refresh_token" : refresh_token,
+        "temporary_password" : temporary_password,
+        "Notice" : "Change your password immediately!"
         }
 
 
-    payload_change_password = change_password_valid()
+    payload_change_password = {
+        "current_password" : temporary_password,
+        "new_password" : "Manhdl.ptit@2026"
+    }
     response_change_password = client.post("/change-password", json = payload_change_password, headers = {"Authorization" : f"Bearer {access_token}"})
 
     assert response_change_password.status_code == 200
-    assert response_change_password.json == {"successfully" : "change password successfully"}
+    assert response_change_password.json == {"Successfully" : "Change password successfully"}
 
 
 
@@ -43,7 +49,7 @@ def test_inf_not_same(client):
     response_inf_user = client.post("/forgot-password", json = payload_inf_user)
 
     assert response_inf_user.status_code == 400
-    assert response_inf_user.json == {"error" : "information is not the same"}
+    assert response_inf_user.json == {"Error" : "information is not the same"}
 
 
 
@@ -56,14 +62,16 @@ def test_null_value_not_important_successfully(client):
 
     access_token = response_inf_user.json["access_token"]
     refresh_token = response_inf_user.json["refresh_token"]
+    temporary_password = response_inf_user.json["temporary_password"]
 
     assert response_inf_user.status_code == 200
     assert response_inf_user.json == {
         "successfully" : "go to \"/change-password\"",
         "access_token" : access_token,
-        "refresh_token" : refresh_token
+        "refresh_token" : refresh_token,
+        "temporary_password" : temporary_password,
+        "Notice" : "Change your password immediately!"
         }
-
 
 
 def test_inf_user_with_fullname_is_white_space(client):
@@ -93,17 +101,6 @@ def test_inf_user_with_phone_number_is_white_space(client):
 
 
 
-def test_change_password_is_white_space(client):
-    payload_signup = signup_valid()
-    response_signup = client.post("/signup", json = payload_signup)
-
-    access_token = response_signup.json["access_token"]
-
-    payload_change_password = change_password_whitespace()
-    response_change_password = client.post("/change-password", json = payload_change_password, headers = {"Authorization" : f"Bearer {access_token}"})
-
-    assert response_change_password.status_code == 400
-    assert response_change_password.json == {"Error" : "Must input new password"}
 
 
 

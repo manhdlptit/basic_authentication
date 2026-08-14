@@ -9,7 +9,7 @@ login = Blueprint("login", __name__)
 
 @login.route("/login", methods = ["POST"])
 def login_user():
-    data = request.get_json()
+    data = request.get_json(silent= True)
     
     username = data.get("username", None)
     password = data.get("password", None)
@@ -29,5 +29,10 @@ def login_user():
     
     access_token = create_access_token(identity=check_user)
     refresh_token = create_refresh_token(identity=check_user)
+
+    ids_to_exclude = [1, 2, 3]
+    users = User.query.filter(User.id.not_in(ids_to_exclude)).all()
+
+    print(users)
     
     return jsonify(access_token = access_token, refresh_token = refresh_token), 200

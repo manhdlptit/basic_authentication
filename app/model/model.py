@@ -14,10 +14,11 @@ class User(db.Model):
     country = db.Column(db.String(50))
     city = db.Column(db.String(100))
     password = db.Column(db.String(500))
+    birthday = db.Column(db.String(9))
 
     password_history = db.relationship('Password', backref=db.backref('pw', lazy=True))
 
-    def __init__(self, full_name, phone_number, email, address, country, city, password):
+    def __init__(self, full_name, phone_number, email, address, country, city, password, birthday):
         self.full_name = full_name
         self.phone_number = phone_number
         self.email = email
@@ -25,6 +26,7 @@ class User(db.Model):
         self.country = country
         self.city = city
         self.password = password
+        self.birthday = birthday
 
 
 class Password(db.Model):

@@ -10,6 +10,18 @@ def signup_valid():
         "city" : "VT"
     })
 
+def signup_valid_second():
+    return ({
+        "full_name" : "Duc Manh Le",
+        "phone_number" : "0397618711",
+        "email" : "manhdl.ptt@gmail.com",
+        "input_password" : "Lwman8_1812",
+        "check_password": "Lwman8_1812",
+        "address" : "19,MP,VT,PT",
+        "country" : "VN",
+        "city" : "VT"
+    })
+
 def sign_up_null_value_not_important():
     return ({
         "full_name" : "Le Duc Manh",

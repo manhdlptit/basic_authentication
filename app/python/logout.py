@@ -19,6 +19,6 @@ def logout_user():
     db.session.commit()
 
     if type_jwt == "access":
-        return jsonify({"successfully" :"access token has revoked"}), 200
+        return jsonify({"Successfully" :"access token has revoked"}), 200
     if type_jwt == "refresh" :
-        return jsonify({"successfully" : "revoked refresh token"}), 200
+        return jsonify({"Successfully" : "revoked refresh token"}), 200

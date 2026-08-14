@@ -11,9 +11,9 @@ def test_logout_successfully(client):
     response_logout_access_token = client.post("/logout", headers = {"Authorization" : f"Bearer {access_token}"})
 
     assert response_logout_access_token.status_code == 200
-    assert response_logout_access_token.json == {"successfully": "access token has revoked"}
+    assert response_logout_access_token.json == {"Successfully": "access token has revoked"}
 
     response_logout_refresh_token = client.post("/logout", headers = {"Authorization" : f"Bearer {refresh_token}"})
 
     assert response_logout_refresh_token.status_code == 200
-    assert response_logout_refresh_token.json == {"successfully" : "revoked refresh token"}
+    assert response_logout_refresh_token.json == {"Successfully" : "revoked refresh token"}
